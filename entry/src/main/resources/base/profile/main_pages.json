@@ -1,0 +1,9 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/LoadPage",
+    "pages/RegisterPage",
+    "pages/FirstPage",
+    "pages/RetrievePage"
+  ]
+}
