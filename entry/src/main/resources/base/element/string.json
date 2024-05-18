@@ -11,10 +11,6 @@
     {
       "name": "EntryAbility_label",
       "value": "label"
-    },
-    {
-      "name": "Baseurl",
-      "value": "localhost:8080/"
     }
   ]
 }
