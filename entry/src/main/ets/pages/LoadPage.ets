@@ -1,8 +1,11 @@
 import router from '@ohos.router'
+import { User } from '../entity/User'
+import { Login } from '../httpRequest/Login'
 @Entry
 @Component
 struct LoadPage {
   @State message: string = 'HELLO！'
+  @State user:User= new User('','')
 
   build() {
     Column({space:10}) {
@@ -34,10 +37,11 @@ struct LoadPage {
       Row(){
         Button('登陆')
           .onClick(() => {
-            router.pushUrl({
+            Login(this.user)
+            /*router.pushUrl({
               url:'pages/FirstPage',
               params:{flag:1}//标记为该用户已登录
-            })
+            })*/
         })
           .width(150)
           .padding(15)
