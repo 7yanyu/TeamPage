@@ -4,5 +4,5 @@ import { User } from '../entity/User';
 import { requestTest } from './PostTest';
 
 export function Login(user:User){
-  return requestTest('localhost:8080',http.RequestMethod.POST,user)
+  return requestTest('localhost:8080/user/login',http.RequestMethod.POST,user)
 }
