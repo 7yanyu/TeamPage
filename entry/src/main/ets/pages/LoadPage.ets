@@ -24,10 +24,14 @@ struct LoadPage {
       Row(){
         Column({space:10}){
           TextInput({placeholder:'请输入账号'})
-            .onClick(()=>{
-
+            .onChange((value:string)=>{
+              // this.user.account=value
+              this.user.username=value
             })
           TextInput({placeholder:'请输入密码'})
+            .onChange((value:string)=>{
+              this.user.password=value
+            })
         }
       }
       .width('90%')

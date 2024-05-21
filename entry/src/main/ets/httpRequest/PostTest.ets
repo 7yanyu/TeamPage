@@ -23,8 +23,14 @@ export function requestTest(url:string,method:http.RequestMethod.POST,requestDat
       if(response.responseCode==200)
       {
         console.log('success'+response.responseCode)
+        // console.log('username:'+requestData.account+'password:'+requestData.password)
+        console.log('username:'+requestData.username+'password:'+requestData.password)
+
       }else{
         console.log('failed'+response.responseCode)
+        // console.log('username:'+requestData.account+'password:'+requestData.password)
+        console.log('username:'+requestData.username+'password:'+requestData.password)
+        console.log(response.result.toString())
       }
     })
 }
