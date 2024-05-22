@@ -30,8 +30,11 @@ export function requestTest(url:string,method:http.RequestMethod.POST,requestDat
           // console.log('username:'+requestData.account+'password:'+requestData.password)
           console.log('username:'+requestData.username+'password:'+requestData.password)
           console.log(response.result.toString())
-          reject(false)
+          resolve(false)
         }
+      })
+      .catch(error=>{
+        resolve(error)
       })
   })
 
