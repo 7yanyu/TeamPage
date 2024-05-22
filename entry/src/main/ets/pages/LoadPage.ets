@@ -6,6 +6,7 @@ import { Login } from '../httpRequest/Login'
 struct LoadPage {
   @State message: string = 'HELLO！'
   @State user:User= new User('','')
+  @State loadtofirst:number =0
 
   build() {
     Column({space:10}) {
@@ -29,6 +30,7 @@ struct LoadPage {
               this.user.username=value
             })
           TextInput({placeholder:'请输入密码'})
+            .type(InputType.Password)
             .onChange((value:string)=>{
               this.user.password=value
             })
@@ -42,10 +44,29 @@ struct LoadPage {
         Button('登陆')
           .onClick(() => {
             Login(this.user)
-            /*router.pushUrl({
-              url:'pages/FirstPage',
-              params:{flag:1}//标记为该用户已登录
-            })*/
+              .then(LoginResult =>{
+                if(LoginResult){
+                  this.loadtofirst=1
+                  console.log('Login successful, navigating to FirstPage'); // 添加日志输出
+                  router.pushUrl({
+                    url:'pages/FirstPage',
+                    // params:{flag:1}//标记为该用户已登录
+                  })
+                }
+              })
+            if(this.loadtofirst==0){
+              console.log('Login failed, showing AlertDialog'); // 添加日志输出
+              AlertDialog.show({
+                title:'错误',
+                message:'账户与密码不匹配或账户不存在',
+                autoCancel:false,
+                primaryButton:{
+                  value:'确认',
+                  action:()=>{}
+                }
+              })
+            }
+
         })
           .width(150)
           .padding(15)
@@ -104,3 +125,5 @@ struct LoadPage {
     .backgroundColor(Color.White)
   }
 }
+
+
