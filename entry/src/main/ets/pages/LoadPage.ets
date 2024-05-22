@@ -6,7 +6,7 @@ import { Login } from '../httpRequest/Login'
 struct LoadPage {
   @State message: string = 'HELLO！'
   @State user:User= new User('','')
-  @State loadtofirst:number =0
+  // @State loadtofirst:number =0
 
   build() {
     Column({space:10}) {
@@ -46,26 +46,28 @@ struct LoadPage {
             Login(this.user)
               .then(LoginResult =>{
                 if(LoginResult){
-                  this.loadtofirst=1
+                  // this.loadtofirst=1
                   console.log('Login successful, navigating to FirstPage'); // 添加日志输出
                   router.pushUrl({
                     url:'pages/FirstPage',
                     // params:{flag:1}//标记为该用户已登录
                   })
+                }else{
+                  console.log('Login failed, showing AlertDialog'); // 添加日志输出
+                  AlertDialog.show({
+                    title:'错误',
+                    message:'账户与密码不匹配或账户不存在',
+                    autoCancel:false,
+                    primaryButton:{
+                      value:'确认',
+                      action:()=>{}
+                    }
+                  })
                 }
               })
-            if(this.loadtofirst==0){
-              console.log('Login failed, showing AlertDialog'); // 添加日志输出
-              AlertDialog.show({
-                title:'错误',
-                message:'账户与密码不匹配或账户不存在',
-                autoCancel:false,
-                primaryButton:{
-                  value:'确认',
-                  action:()=>{}
-                }
-              })
-            }
+            // if(this.loadtofirst==0){
+
+            // }
 
         })
           .width(150)
