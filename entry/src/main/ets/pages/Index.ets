@@ -8,6 +8,7 @@ struct Index {
   @State message: string = '跳转登陆'
   @State seconds:number=5
 
+
   build() {
     Column() {
       Row(){
