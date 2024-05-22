@@ -2,7 +2,7 @@ import { Users } from '../entity/Users'
 // @Entry
 @Component
 export struct registerContent{
-  @State msg:string=''
+  @State msg:string='账号'
   @Link user:Users// 初始化一个空的用户对象
   build() {
     // 输入??
@@ -13,25 +13,13 @@ export struct registerContent{
           TextInput({ placeholder: `请输入${this.msg}` })
             .type(InputType.Password)
             .onChange((value: string) => {
-              this.user.password = value
-            })
-            .padding({left:20})
-        }else if(this.msg=='账号'){
-          TextInput({ placeholder: `请输入${this.msg}` })
-            .onChange((value: string) => {
               this.user.account = value
             })
             .padding({left:20})
-        }else if(this.msg=='姓名'){
+        }else{
           TextInput({ placeholder: `请输入${this.msg}` })
             .onChange((value: string) => {
-              this.user.realname = value
-            })
-            .padding({left:20})
-        }else if(this.msg=='性别'){
-          TextInput({ placeholder: `请输入${this.msg}` })
-            .onChange((value: string) => {
-              this.user.sex = value
+              this.user.account = value
             })
             .padding({left:20})
         }
