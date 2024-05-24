@@ -1,7 +1,7 @@
 @Entry
 @Component
-struct PositionPage {
-  @State message: string = 'position'
+struct ChangDPMentPage {
+  @State message: string = 'Hello World'
 
   build() {
     Row() {
@@ -13,7 +13,5 @@ struct PositionPage {
       .width('100%')
     }
     .height('100%')
-    .backgroundImage($r("app.media.MainBackground"))
-    .backgroundImageSize({width:'100%',height:'100%'})
   }
 }
