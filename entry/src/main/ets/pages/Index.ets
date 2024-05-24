@@ -1,19 +1,35 @@
 import router from '@ohos.router';
-
+import {secondsSub} from '../module/setInterval'
 @Entry
 @Component
 struct Index {
   @State msg1: string = '人事管理系统'
   @State msg2: string = '帮助你更好的管理员工信息'
   @State message: string = '跳转登陆'
-
-
+  @State seconds:number=5
 
   build() {
     Column() {
       Row(){
+
+        Button(`跳过  ${this.seconds}s`)
+
+          .fontColor('black')
+          .backgroundColor('green')
+          .onClick(()=> {
+            router.replaceUrl({
+              url: 'pages/LoadPage'
+            })
+          })
+        // this.seconds=secondsSub(this.seconds)
+
       }
-      .height(40)
+      .width('90%')
+      .padding({top:10})
+      // .height(40)
+      .justifyContent(FlexAlign.End)
+
+
       Row(){
         Text(this.msg1)
           .fontSize(50)
@@ -34,27 +50,5 @@ struct Index {
     }
     .width('100%')
     .height('100%')
-    .backgroundColor(Color.White)
-    //跳转需要改成计时器，计数完成之后自动跳转到登陆页面
-    .onClick(()=>{
-      router.replaceUrl({
-        url:'pages/LoadPage'
-      })
-    })
-
-     // setTimeout(function (){})
-
-    /*let timeoutMs = 700;  // change it to be correct.
-    try {
-      tag.getIsoDep(tagInfo).setTimeout(timeoutMs);
-      console.log("tag setTimeout success");
-    } catch (busiError) {
-      console.log("tag setTimeout busiError: " + busiError);
-    }*/
-
   }
-  /*timeoutID = setTimeout(function() {
-    console.log('do after 1s delay.');
-  }, 1000);
-  clearTimeout(timeoutID);*/
 }

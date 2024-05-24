@@ -83,7 +83,8 @@ struct RegisterPage {
       }
       .width('100%')
       .height('100%')
-      .backgroundColor(Color.White)
     }
+    .backgroundImage($r("app.media.LoadBackground"))
+    .backgroundImageSize({width:'100%',height:'100%'})
   }
 }

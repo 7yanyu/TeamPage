@@ -2,7 +2,7 @@ import { Users } from '../entity/Users'
 // @Entry
 @Component
 export struct registerContent{
-  @State msg:string='账号'
+  @State msg:string=''
   @Link user:Users// 初始化一个空的用户对象
   build() {
     // 输入??
