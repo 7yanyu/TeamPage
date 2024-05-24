@@ -18,24 +18,24 @@ struct OrganizationPage {
             .backgroundColor('#4492E6')
             .fitOriginalSize(true)
           firstButton({msg:'部门管理'})
+            .onClick(()=>{
+              router.pushUrl({
+                url:'pages/Organization/departmentPage'
+              })
+            })
         }
-        .onClick(()=>{
-          router.pushUrl({
-            url:'pages/Organization/departmentPage'
-          })
-        })
         Row(){
           Image($r('app.media.manage'))
             .height(50)
             .backgroundColor('#4492E6')
             .fitOriginalSize(true)
           firstButton({msg:'岗位管理'})
+            .onClick(()=>{
+              router.pushUrl({
+                url:'pages/Organization/positionPage'
+              })
+            })
         }
-        .onClick(()=>{
-          router.pushUrl({
-            url:'pages/Organization/positionPage'
-          })
-        })
       }
       .width('100%')
       .height('70%')

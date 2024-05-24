@@ -1,6 +1,6 @@
 @Entry
 @Component
-struct SelectPage {
+struct ChangDPMentPage {
   @State message: string = 'Hello World'
 
   build() {
