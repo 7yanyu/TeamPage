@@ -11,18 +11,6 @@ struct SelectPosPage {
   @State itemsPerPage: number = 9; // 每页显示的项目数量
 
 
-  onClickView(pos: Position) {
-    console.log('查看按钮被点击');
-    const positionJson = JSON.stringify(pos);
-    console.log('Encoded position:', positionJson);
-    router.pushUrl({
-      url: 'pages/Organization/Position/posdetailsPage',
-      params: {
-        pos: positionJson
-      }
-    });
-  }
-
   build() {
     Column() {
       Row({space:10}) {
@@ -88,7 +76,11 @@ struct SelectPosPage {
                 Text(position.dep_name).width(70).textAlign(TextAlign.Start);
                 Text('查看')
                   .fontColor('blue')
-                  .onClick(() => this.onClickView(position));
+                  .onClick(() => {
+                    router.pushUrl({
+                      url: ''
+                    });
+                  });
               }
               .padding({ top: 15, bottom: 10 });
             })
