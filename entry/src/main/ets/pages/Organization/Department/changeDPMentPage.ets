@@ -1,10 +1,9 @@
-import router from '@ohos.router'
 import { Department } from '../../../entity/Department'
-import { Add_dep } from '../../../httpRequest/Department/depAdd'
+import { Change_dep } from '../../../httpRequest/Department/depChange'
 @Entry
 @Component
-struct AddPage {
-  @State message: string = '增加部门'
+struct ChangeDPMentPage {
+  @State message: string = '修改部门信息'
   @State department:Department=new Department(0,'','','','')
   // private item:Array<string>=['部门ID','部门名称','部门电话','成立时间','部门成立时间','部门简介']
   build() {
@@ -109,25 +108,20 @@ struct AddPage {
 
       Button('提交')
         .onClick(() => {
-          Add_dep(this.department)
+          //调用接口，新增部门
+          Change_dep(this.department)
             .then((response)=>{
-              if(response.toString()=='添加成功'){
+              if(response){
                 AlertDialog.show({
                   title:'提示',
-                  message:'添加成功,是否继续添加',
+                  message:'修改成功',
                   primaryButton:{
-                    value:'返回',
-                    action:()=>{
-                      router.back()
-                    }
-                  },
-                  secondaryButton:{
-                    value:'继续',
+                    value:'好的',
                     action:()=>{}
                   }
                 })
               }
-          })
+            })
         })
         .width(100)
         .margin(20)

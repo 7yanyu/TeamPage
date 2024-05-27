@@ -1,6 +1,7 @@
 import router from '@ohos.router'
 import { User } from '../entity/User'
 import { Login } from '../httpRequest/Login'
+
 @Entry
 @Component
 struct LoadPage {
@@ -47,7 +48,7 @@ struct LoadPage {
             if(this.checked){
               Login(this.user)
                 .then(LoginResult =>{
-                  if(LoginResult){
+                  if(LoginResult=='登陆成功'){
                     // this.loadtofirst=1
                     console.log('Login successful, navigating to FirstPage'); // 添加日志输出
                     router.replaceUrl({

@@ -13,13 +13,25 @@ export struct registerContent{
           TextInput({ placeholder: `请输入${this.msg}` })
             .type(InputType.Password)
             .onChange((value: string) => {
-              this.user.account = value
+              this.user.password = value
             })
             .padding({left:20})
-        }else{
+        }else if(this.msg=='账号'){
           TextInput({ placeholder: `请输入${this.msg}` })
             .onChange((value: string) => {
               this.user.account = value
+            })
+            .padding({left:20})
+        }else if(this.msg=='姓名'){
+          TextInput({ placeholder: `请输入${this.msg}` })
+            .onChange((value: string) => {
+              this.user.realname = value
+            })
+            .padding({left:20})
+        }else if(this.msg=='性别'){
+          TextInput({ placeholder: `请输入${this.msg}` })
+            .onChange((value: string) => {
+              this.user.sex = value
             })
             .padding({left:20})
         }
