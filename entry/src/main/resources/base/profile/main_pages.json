@@ -11,7 +11,13 @@
     "pages/Organization/positionPage",
     "pages/Organization/Department/selectDPMentPage",
     "pages/Organization/Department/addDPMentPage",
-    "pages/Organization/Department/changDPMentPage",
-    "pages/Organization/Department/deleteDPMentPage"
+    "pages/Organization/Department/changeDPMentPage",
+    "pages/Organization/Department/deleteDPMentPage",
+    "pages/Organization/Position/selectPosPage",
+    "pages/Organization/Position/addPosPage",
+    "pages/Organization/Position/changePosPage",
+    "pages/Organization/Position/deletePosPage",
+    "pages/Organization/Position/posdetailsPage",
+    "pages/Organization/Department/depdetailsPage"
   ]
 }
