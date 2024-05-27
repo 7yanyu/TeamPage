@@ -1,0 +1,18 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/LoadPage",
+    "pages/RegisterPage",
+    "pages/FirstPage",
+    "pages/RetrievePage",
+    "pages/protocolPage",
+    "pages/Organization/OrganizationPage",
+    "pages/Organization/departmentPage",
+    "pages/Organization/positionPage",
+    "pages/Organization/Department/selectDPMentPage",
+    "pages/Organization/Department/addDPMentPage",
+    "pages/Organization/Department/changDPMentPage",
+    "pages/Organization/Department/deleteDPMentPage",
+    "pages/Organization/Department/introduceDPMPage"
+  ]
+}
