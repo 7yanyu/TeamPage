@@ -10,11 +10,12 @@ export function Change_dep(department:Department):Promise<boolean>{
 
     const url=Baseurl()+'department/update'
     console.log('url:'+url)
+    console.log(department.creat_date)
 
     httpRequest.request(
       url,
       {
-        method:http.RequestMethod.POST,
+        method:http.RequestMethod.PUT,
         extraData:JSON.stringify(department)
       }
     )
