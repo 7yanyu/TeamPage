@@ -1,10 +1,5 @@
-Department文件夹： 
-      depdetailsPage.ets部门介绍做了页面修改
-      deleteDPMentPage.ets文件删除
-Position文件夹：
-     selectPosPage岗位查询页面做了修改
-     addPosPage增加岗位页面做了修改
-     changePosPage修改岗位页面做了修改
-     posdetailsPage岗位详情页面做了修改
-     deletePosPage.ets文件删除
-posby_ID.ets文件做了修改
+# 修改信息
+
+## 2024-05-29
+
+16：48修复远程仓库中的代码，开始继续实现页面功能
