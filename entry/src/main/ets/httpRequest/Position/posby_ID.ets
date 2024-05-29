@@ -1,10 +1,11 @@
 import http from '@ohos.net.http'
 import { Position } from '../../entity/Position'
+import { Baseurl } from '../../module/BaseUrl'
 
 export function  posby_ID(pos_id:number):Promise<Position[]>{
   return new Promise<Position[]>((resolve,reject)=>{
     let httpRequest=http.createHttp()
-    const url=pos_id==0?'localhost:8080/position/findAll':`localhost:8080/position/findbyID?id=${pos_id}`
+    const url=pos_id==0?Baseurl()+'position/findAll':Baseurl()+`position/findbyID?id=${pos_id}`
     httpRequest.request
     (
       // `182.92.245.184:8012/position/findbyID?id=${pos_id}`,

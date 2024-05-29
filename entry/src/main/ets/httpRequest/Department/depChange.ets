@@ -1,13 +1,14 @@
 
 import http from '@ohos.net.http';
 import { Department } from '../../entity/Department';
+import { Baseurl } from '../../module/BaseUrl';
 
 
 export function Change_dep(department:Department):Promise<boolean>{
   return new Promise<boolean>((resolve,reject)=>{
     let httpRequest = http.createHttp()
 
-    const url='localhost:8080/department/update'
+    const url=Baseurl()+'department/update'
     console.log('url:'+url)
 
     httpRequest.request(

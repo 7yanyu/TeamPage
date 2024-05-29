@@ -1,11 +1,12 @@
 
 import http from '@ohos.net.http';
 import { Department } from '../../entity/Department';
+import { Baseurl } from '../../module/BaseUrl';
 
 export function Add_dep(department:Department):Promise<string>{
   return new Promise<string>((resolve,reject)=>{
     let httpRequest=http.createHttp()
-    const url = 'localhost:8080/department/add'
+    const url =Baseurl()+'department/add'
 
     httpRequest.request(
       url,
