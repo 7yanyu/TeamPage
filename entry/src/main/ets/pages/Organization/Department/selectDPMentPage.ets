@@ -8,7 +8,11 @@ struct SelectPage {
   @State departments: Department[] = [];
   @State hasSearched: boolean = false; // 用于跟踪是否进行了查询
   @State currentPage: number = 1; // 当前页码
-  @State itemsPerPage: number = 9; // 每页显示的项目数量
+  @State itemsPerPage: number = 8; // 每页显示的项目数量
+  @State message: string = '部门管理'
+  @State message1: string = '增加部门'
+  @State message2: string = '修改部门'
+
   onClickView(department: Department) {
     console.log('查看按钮被点击');
     const departmentJson = JSON.stringify(department);
@@ -23,6 +27,24 @@ struct SelectPage {
 
   build() {
     Column() {
+      Row(){
+        Column(){
+          Image($r('app.media.test1'))
+            // .fitOriginalSize(true)
+            .width(30)
+            .onClick(()=>{
+              router.back()
+            })
+        }.width('30%')
+        .alignItems(HorizontalAlign.Start)
+
+        Text(this.message)
+          .fontSize(30)
+          .textAlign(TextAlign.Center)
+
+      }.padding({top:15})
+      .width('90%')
+
       Row({space:10}) {
         TextInput({ placeholder: '请输入查询部门id' })
           .onChange((value: string) => {
@@ -36,6 +58,8 @@ struct SelectPage {
           .margin({ right: 15 });
 
         Button('查询')
+          .fontColor('black')
+          .backgroundColor('#99D9EA')
           .onClick(() => {
             // 清空已有数据
             this.departments = [];
@@ -58,18 +82,16 @@ struct SelectPage {
           .fontSize(15)
       }
       .width('100%')
-      .padding({ top: 40, bottom: 20 })
+      .padding({ top:5, bottom: 20 })
       //查询结果表格
-
       Row({space:10}) {
-        Text('部门ID').fontWeight(FontWeight.Bold).width(60).textAlign(TextAlign.Center);
+        Text('部门ID').fontWeight(FontWeight.Bold).width(50).textAlign(TextAlign.Center);
         Text('部门名称').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
         Text('部门电话').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
         Text('成立时间').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
-        Text('详情').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
       }
-      .padding({ top: 10, bottom: 10 });
-
+      .width('95%')
+      .padding({  bottom: 10 });
 
       Column(){
         // 显示查询结果
@@ -79,12 +101,13 @@ struct SelectPage {
 
             ForEach(this.departments.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage), (department: Department) => {
               Row({ space: 10 }) {
+
                 Text(department.dep_ID.toString()).width(60).textAlign(TextAlign.Center);
                 Text(department.dep_name).width(70).textAlign(TextAlign.Start);
                 Text(department.dep_phone).width(70).textAlign(TextAlign.Start);
                 Text(department.creat_date).width(70).textAlign(TextAlign.Start);
                 Text('查看')
-                  .fontColor('blue')
+                  .fontColor('#8AB7FF')
                   .onClick(() => this.onClickView(department))
               }
               .padding({ top: 15, bottom: 10 });
@@ -101,43 +124,76 @@ struct SelectPage {
 
         }
       }
-      .height('75%')
+      .height('65%')
       .width('100%')
 
-      if(this.departments.length>0) {
-        Row() {
-          Button('上一页')
-            .width(100)
-            .height(30)
-            .fontColor('#fff')
-            .backgroundColor('#8bc34a')
-            .borderRadius(5)
-            .onClick(() => {
-              if (this.currentPage > 1) {
-                this.currentPage--;
-              }
-            });
 
-          Text(`第 ${this.currentPage} 页`);
+      Row() {
+        Button('上一页')
+          .borderRadius(8)
+          .width(100)
+          .height(30)
+          .fontColor('black')
+          .backgroundColor('')
+          .borderRadius(5)
+          .onClick(() => {
+            if (this.currentPage > 1) {
+              this.currentPage--;
+            }
+          });
+        Text(`第 ${this.currentPage} 页`);
 
-          Button('下一页')
-            .width(100)
-            .height(30)
-            .fontColor('#fff')
-            .backgroundColor('#8bc34a')
-            .borderRadius(5)
-            .onClick(() => {
-              const maxPage = Math.ceil(this.departments.length / this.itemsPerPage);
-              if (this.currentPage < maxPage) {
-                this.currentPage++;
-              }
-            });
-        }.alignItems(VerticalAlign.Bottom)
-      }
+        Button('下一页')
+          .width(100)
+          .height(30)
+          .fontColor('black')
+          .backgroundColor('')
+          .borderRadius(5)
+          .onClick(() => {
+            const maxPage = Math.ceil(this.departments.length / this.itemsPerPage);
+            if (this.currentPage < maxPage) {
+              this.currentPage++;
+            }
+          });
+      }.alignItems(VerticalAlign.Center)
+      .height('5%')
+      Row({space:20}) {
+        Column() {
+          Image($r('app.media.test2'))
+            .width(30)
+            .onClick(()=>{
+              router.pushUrl({
+                url:'pages/Organization/Department/addDPMentPage'
+              })
+            })
+          Text(this.message1)
+            .fontSize(15)
+            .textAlign(TextAlign.Start)
+
+        }.alignItems(HorizontalAlign.Center)
+        .padding({top:20})
+        .width('60%')
+
+        Column() {
+          Image($r('app.media.test3'))
+            .width(30)
+            .onClick(()=>{
+              router.pushUrl({
+                url:'pages/Organization/Department/changeDPMentPage'
+              })
+            })
+          Text(this.message2)
+            .fontSize(15)
+            .textAlign(TextAlign.End)
+
+        }.alignItems(HorizontalAlign.Center)
+        .padding({top:20})
+
+
+      }.width('100%')
     }
     .width('100%')
     .height('100%')
-    .backgroundImage($r("app.media.MainBackground"))
     .backgroundImageSize({width:'100%',height:'100%'})
   }
 
