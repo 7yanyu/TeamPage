@@ -1,7 +1,7 @@
 @Entry
 @Component
 struct EmpIndexPage {
-  @State message: string = 'empIndexPage'
+  @State message: string = '员工信息'
 
   build() {
     Row() {

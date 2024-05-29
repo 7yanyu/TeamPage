@@ -5,14 +5,14 @@ import router from '@ohos.router'
 struct FirstPage {
   private swiperController:SwiperController=new SwiperController()
   private  list01:Array<Item>=[
-    new Item($r('app.media.icon'),'部门管理','pages/Organization/Department/selectDPMentPage'),
-    new Item($r('app.media.icon'),'岗位管理','pages/Organization/Position/selectPosPage'),
-    new Item($r('app.media.icon'),'员工信息','pages/employee/information/empIndexPage')
+    new Item($r('app.media.department'),'部门管理','pages/Organization/Department/selectDPMentPage'),
+    new Item($r('app.media.position'),'岗位管理','pages/Organization/Position/selectPosPage'),
+    new Item($r('app.media.information'),'员工信息','pages/employee/information/empIndexPage')
   ]
   private  list02:Array<Item>=[
-    new Item($r('app.media.icon'),'离职管理','pages/employee/dimission/dimIndexPage'),
-    new Item($r('app.media.icon'),'入职管理','pages/employee/joined/joinIndexPage'),
-    new Item($r('app.media.icon'),'员工调动','pages/employee/move/moveIndexPage')
+    new Item($r('app.media.dimission'),'离职管理','pages/employee/dimission/dimIndexPage'),
+    new Item($r('app.media.join'),'入职管理','pages/employee/joined/joinIndexPage'),
+    new Item($r('app.media.move'),'员工调动','pages/employee/move/moveIndexPage')
   ]
 
   private list03:Array<message>=[
