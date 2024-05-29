@@ -14,7 +14,7 @@ struct SelectPage {
     const departmentJson = JSON.stringify(department);
     console.log('Encoded Department:', departmentJson);
     router.pushUrl({
-      url: 'pages/Organization/Department/introduceDPMPage',
+      url: 'pages/Organization/Department/depdetailsPage',
       params: {
         department: departmentJson
       }
