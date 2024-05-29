@@ -7,7 +7,37 @@ struct FirstPage {
 
   build() {
     Column() {
-      Text(this.message)
+      Row(){
+        //轮播图
+      }
+      .width('100%')
+
+      Row(){
+        //department,position,employee
+
+      }
+      .width('95%')
+
+      Row(){
+        //dimission,add_employee
+      }
+      .width('95%')
+
+
+
+    }
+    .width('100%')
+    .height('100%')
+    // .backgroundImage($r("app.media.MainBackground"))
+    // .backgroundImageSize({width:'100%',height:'100%'})
+  }
+}
+
+
+
+
+
+/*Text(this.message)
         .fontSize(70)
         .fontWeight(FontWeight.Bold)
         .padding({top:100})
@@ -66,12 +96,4 @@ struct FirstPage {
 
 
       }
-      .padding({top:90})
-
-    }
-    .width('100%')
-    .height('100%')
-    .backgroundImage($r("app.media.MainBackground"))
-    .backgroundImageSize({width:'100%',height:'100%'})
-  }
-}
+      .padding({top:90})*/

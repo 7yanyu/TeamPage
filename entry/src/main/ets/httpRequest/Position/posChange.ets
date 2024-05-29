@@ -1,21 +1,21 @@
 
 import http from '@ohos.net.http';
-import { Department } from '../../entity/Department';
+import { Position } from '../../entity/Position';
 import { Baseurl } from '../../module/BaseUrl';
 
 
-export function Change_dep(department:Department):Promise<boolean>{
+export function Change_pos(position:Position):Promise<boolean>{
   return new Promise<boolean>((resolve,reject)=>{
     let httpRequest = http.createHttp()
 
-    const url=Baseurl()+'department/update'
+    const url=Baseurl()+'position/update'
     console.log('url:'+url)
 
     httpRequest.request(
       url,
       {
         method:http.RequestMethod.POST,
-        extraData:JSON.stringify(department)
+        extraData:JSON.stringify(position)
       }
     )
       .then((response)=>{
@@ -23,7 +23,7 @@ export function Change_dep(department:Department):Promise<boolean>{
           console.log(response.result.toString())
           resolve(true)
         }else{
-          console.log(response.result.toString())
+          console.log('failed'+response.result.toString())
           resolve(false)
         }
       })
