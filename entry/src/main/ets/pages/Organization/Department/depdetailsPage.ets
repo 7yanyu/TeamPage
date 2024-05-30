@@ -1,5 +1,7 @@
 import {Department} from '../../../entity/Department'
 import router from '@ohos.router';
+import { Delete_dep } from '../../../httpRequest/Department/depDelete'
+
 @Entry
 @Component
 struct introduceDPMPage {
@@ -30,13 +32,36 @@ struct introduceDPMPage {
 
   build() {
     Column() {
-      Row() {
+
+      Row(){
+        Column(){
+          Image($r("app.media.back"))
+            // .fitOriginalSize(true)
+            .width(30)
+            .onClick(()=>{
+              router.back()
+            })
+        }.width('30%')
+        .alignItems(HorizontalAlign.Start)
         Text(this.message)
-          .fontSize(35)
-          .fontWeight(FontWeight.Bold)
-          .padding({ bottom: 20, top: 20 })
-          .textAlign(TextAlign.Center);
+          .fontSize(30)
+          .textAlign(TextAlign.Center)
+
+      }.padding({top:15})
+      .width('90%')
+
+
+     Row(){
+        Column(){
+          Image($r("app.media.test4"))
+            .width(80)
+        }.width('30%')
+        .alignItems(HorizontalAlign.Start)
+        .padding({top:20,left:10})
+
       }
+
+
       if(this.department){
         Column() {
           Row() {
@@ -65,6 +90,8 @@ struct introduceDPMPage {
               .width('70%')
               .padding({top: 15, bottom: 15});
           }
+
+
           Row() {
             Text('部门电话:')
               .fontSize(25)
@@ -108,18 +135,63 @@ struct introduceDPMPage {
               .width('80%')
               .padding({top: 10, bottom: 15});
           }
-        }.height('80%')
-        .padding(20)
-        .borderRadius(10)
-        .margin({ top: 20 })
-        .shadow({ color: '#000000', radius: 5, });
+        }  .width('100%')
+        .height('60%')
+        .padding({left:25,top:15})
+        // .backgroundColor('red')
+        .alignItems(HorizontalAlign.Start)
+        .shadow({color:'gray',radius:15})
+
+      }
+
+      Row(){
+        Text('删除')
+          .fontColor('red')
+          .fontSize('20')
+          .padding({top:28})
+          .onClick(()=>{
+            AlertDialog.show({
+              title:'提示',
+              message:'是否确认删除该部门',
+              primaryButton:{
+                value:'No',
+                action:()=>{}
+              },
+              secondaryButton:{
+                value:'Yes',
+                action:()=>{
+                  //先查询部门内人员是否为空，为空再进行删除操作
+                  Delete_dep(this.department.dep_ID)
+                    .then((response)=>{
+                      if(response){
+                        AlertDialog.show({
+                          title:'提示',
+                          message:'删除成功',
+                          primaryButton:{
+                            value:'确认',
+                            action:()=>{
+                              router.back()
+                            }
+                          }
+                        })
+
+                        console.log('successed delete')
+                      }else{
+                        console.log('failed delete')
+                      }
+                    })
+                }
+              }
+            })
+
+
+          })
       }
 
 
     }
     .width('100%')
     .height('100%')
-    .backgroundImage($r("app.media.MainBackground"))
     .backgroundImageSize({width:'100%',height:'100%'})
   }
 }
