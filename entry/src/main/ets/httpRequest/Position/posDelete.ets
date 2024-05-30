@@ -13,7 +13,7 @@ export function Delete_pos(id:number):Promise<boolean>{
     httpRequest.request(
       url,
       {
-        method:http.RequestMethod.GET,
+        method:http.RequestMethod.DELETE,
         // header:{
         //   'Content-Type':'application/json'
         // }
