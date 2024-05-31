@@ -3,7 +3,7 @@ import router from '@ohos.router'
 @Component
 struct QueryPage {
   @State message: string = '员工查询'
-  private list01:string[]=['员工ID','岗位ID','部门ID']
+  // private list01:string[]=['员工ID','岗位ID','部门ID']
 
 
   build() {
@@ -26,7 +26,7 @@ struct QueryPage {
         .strokeWidth(5)
         .margin({top:5})
 
-      Row(){
+      /*Row(){
         ForEach(
           this.list01,
           (item:string)=>{
@@ -34,7 +34,7 @@ struct QueryPage {
 
             }
           })
-      }
+      }*/
 
     }
     .width('100%')
