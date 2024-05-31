@@ -29,7 +29,7 @@ struct SelectPage {
     Column() {
       Row(){
         Column(){
-          Image($r('app.media.test1'))
+          Image($r("app.media.back"))
             // .fitOriginalSize(true)
             .width(30)
             .onClick(()=>{
@@ -130,7 +130,6 @@ struct SelectPage {
 
       Row() {
         Button('上一页')
-          .borderRadius(8)
           .width(100)
           .height(30)
           .fontColor('black')
@@ -154,9 +153,10 @@ struct SelectPage {
             if (this.currentPage < maxPage) {
               this.currentPage++;
             }
-          });
+          })
       }.alignItems(VerticalAlign.Center)
       .height('5%')
+
       Row({space:20}) {
         Column() {
           Image($r('app.media.test2'))

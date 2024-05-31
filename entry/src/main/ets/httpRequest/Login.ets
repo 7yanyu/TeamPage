@@ -21,7 +21,7 @@ export function Login(user:User):Promise<string>{
       }
     )
       .then(response=>{
-        if(response.result)
+        if(response.result=='登陆成功')
         {
           console.log('success'+response.responseCode)
           // console.log('username:'+requestData.account+'password:'+requestData.password)
