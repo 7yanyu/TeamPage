@@ -1,14 +1,11 @@
 @Entry
 @Component
-struct DimIndexPage {
-  @State message: string = 'DimIndexPage'
+struct CareerPage {
+  @State message: string = 'Hello World'
 
   build() {
     Row() {
       Column() {
-        Row(){
-
-        }
         Text(this.message)
           .fontSize(50)
           .fontWeight(FontWeight.Bold)

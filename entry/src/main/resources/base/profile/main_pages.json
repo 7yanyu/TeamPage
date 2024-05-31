@@ -19,9 +19,16 @@
     "pages/Organization/Position/deletePosPage",
     "pages/Organization/Position/posdetailsPage",
     "pages/Organization/Department/depdetailsPage",
-    "pages/employee/information/empIndexPage",
     "pages/employee/dimission/dimIndexPage",
     "pages/employee/joined/joinIndexPage",
-    "pages/employee/move/moveIndexPage"
+    "pages/employee/move/moveIndexPage",
+    "pages/employee/information/empIndexPage",
+    "pages/employee/information/tryPage",
+    "pages/employee/information/queryPage",
+    "pages/employee/information/careerPage",
+    "pages/employee/information/languagePage",
+    "pages/employee/information/familyPage",
+    "pages/employee/information/monthlyReportPage",
+    "pages/employee/information/OpTryPage"
   ]
 }

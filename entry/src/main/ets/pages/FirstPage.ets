@@ -50,6 +50,7 @@ struct FirstPage {
                   })
                 })
               Text(item.msg)
+                .fontWeight(FontWeight.Bold)
             }
           })
       }
@@ -72,6 +73,7 @@ struct FirstPage {
                   })
                 })
               Text(item.msg)
+                .fontWeight(FontWeight.Bold)
             }
           })
       }

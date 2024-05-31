@@ -1,11 +1,13 @@
 import http from '@ohos.net.http';
 import { Users } from '../entity/Users';
+import { Baseurl } from '../module/BaseUrl';
 export async function Register( user:Users) :Promise<string> {
   // @ts-ignore
   return new Promise((resolve, reject) => {
     let httpRequest = http.createHttp();
+    const url=Baseurl()+'user/register'
     httpRequest.request(
-      'localhost:8080/user/register',
+      url,
       {
         method:http.RequestMethod.POST,
         extraData:JSON.stringify(user)
