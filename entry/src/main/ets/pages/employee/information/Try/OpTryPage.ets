@@ -1,6 +1,6 @@
 import router from '@ohos.router'
-import { employee } from '../../../entity/employee'
-import { tryChangeRequest } from '../../../httpRequest/employee/information/tryChangeRequest'
+import { employee } from '../../../../entity/employee'
+import { tryChangeRequest } from '../../../../httpRequest/employee/information/tryChangeRequest'
 @Entry
 @Component
 struct OpTryPage {
@@ -102,7 +102,7 @@ struct OpTryPage {
               selected:this.selectDate,
               onAccept:(value:DatePickerResult)=>{
                 this.selectDate.setFullYear(value.year,value.month,value.day)
-                this.emp.confirm_date=`${value.year}-${value.month}-${value.day}`
+                this.emp.confirm_date=`${value.year}-${value.month+1}-${value.day}`
               }
             })
           })
@@ -130,6 +130,20 @@ struct OpTryPage {
           tryChangeRequest(this.emp).then(response=>{
             if(response){
               console.log(this.emp.toString())
+              AlertDialog.show({
+                title:'提示',
+                message:'操作成功，是否返回？',
+                primaryButton:{
+                  value:'No',
+                  action:()=>{}
+                },
+                secondaryButton:{
+                  value:'Yes',
+                  action:()=>{
+                    router.back()
+                  }
+                }
+              })
 
             }
           })

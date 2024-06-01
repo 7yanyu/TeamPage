@@ -6,8 +6,8 @@ struct EmpIndexPage {
   @State message: string = '员工信息'
 
   private  list01:Array<Item>=[
-    new Item($r('app.media.try'),'试用管理','pages/employee/information/tryPage'),
-    new Item($r('app.media.query'),'员工查询','pages/employee/information/queryPage'),
+    new Item($r('app.media.try'),'试用管理','pages/employee/information/Try/tryPage'),
+    new Item($r('app.media.query'),'员工查询','pages/employee/information/Query/queryPage'),
     new Item($r('app.media.career'),'职业生涯','pages/employee/information/careerPage')
   ]
   private  list02:Array<Item>=[

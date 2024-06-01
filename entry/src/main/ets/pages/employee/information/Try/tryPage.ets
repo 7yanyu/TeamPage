@@ -1,7 +1,7 @@
 import router from '@ohos.router'
-import { employee } from '../../../entity/employee'
-import { Findemp } from '../../../entity/Findemp'
-import { tryRequest } from '../../../httpRequest/employee/information/tryQueryRequest'
+import { employee } from '../../../../entity/employee'
+import { Findemp } from '../../../../entity/Findemp'
+import { tryRequest } from '../../../../httpRequest/employee/information/tryQueryRequest'
 @Entry
 @Component
 struct TryPage {
@@ -176,7 +176,7 @@ struct TryPage {
                     console.log('操作按钮被点击')
                     console.log(JSON.stringify(item))
                     router.pushUrl({
-                      url:'pages/employee/information/OpTryPage',
+                      url:'pages/employee/information/Try/OpTryPage',
                       params: {
                         employee: JSON.stringify(item)
                       }
