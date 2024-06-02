@@ -112,7 +112,7 @@ struct SelectPage {
               }
               .padding({ top: 15, bottom: 10 });
             })
-            // 分页控件
+
 
           }
           else {
@@ -153,10 +153,9 @@ struct SelectPage {
             if (this.currentPage < maxPage) {
               this.currentPage++;
             }
-          })
+          });
       }.alignItems(VerticalAlign.Center)
       .height('5%')
-
       Row({space:20}) {
         Column() {
           Image($r('app.media.test2'))
