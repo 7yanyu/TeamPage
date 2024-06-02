@@ -1,5 +1,6 @@
 import router from '@ohos.router'
 import { DimUser } from '../../../entity/DimUser'
+import {Delete_dim} from  '../../../httpRequest/dimission/Delete_dim'
 @Entry
 @Component
 struct DetailsPage {
@@ -163,20 +164,26 @@ struct DetailsPage {
               .width('70%')
               .padding({top:8})
           }
+          if (this.dimuser.confirm_date !== null ){
+            Row() {
+              Text('转正日期')
+                .fontSize(25)
+                .fontWeight(FontWeight.Bold)
+                .textAlign(TextAlign.Start)
+                .width('40%')
+                .padding({top:8})
 
-          Row() {
-            Text('转正日期')
-              .fontSize(25)
-              .fontWeight(FontWeight.Bold)
-              .textAlign(TextAlign.Start)
-              .width('40%')
-              .padding({top:8})
-            Text(this.dimuser.confirm_date.toString())
-              .fontSize(25)
-              .textAlign(TextAlign.Start)
-              .width('70%')
-              .padding({top:8})
+              Text(this.dimuser.confirm_date.toString())
+                .fontSize(25)
+                .textAlign(TextAlign.Start)
+                .width('70%')
+                .padding({top:8})
+
+
+            }
           }
+
+
 
           Row() {
             Text('离职原因:')
@@ -188,12 +195,15 @@ struct DetailsPage {
 
           }
           Row(){
+            if (this.dimuser.dim_reason !== null ){
+              Text(this.dimuser.dim_reason)
+                .fontSize(25)
+                .textAlign(TextAlign.Start)
+                .width('80%')
+                .padding({top: 8, bottom: 15});
+            }
             //简介
-            Text(this.dimuser.dim_reason)
-              .fontSize(25)
-              .textAlign(TextAlign.Start)
-              .width('80%')
-              .padding({top: 8, bottom: 15});
+
           }
 
 
@@ -210,6 +220,39 @@ struct DetailsPage {
             .fontSize('20')
             .padding({top:28})
             .onClick(()=>{
+              AlertDialog.show({
+                title:'提示',
+                message:'是否确认删除该离职信息',
+                primaryButton:{
+                  value:'No',
+                  action:()=>{}
+                },
+                secondaryButton:{
+                  value:'Yes',
+                  action:()=>{
+                    //先查询部门内人员是否为空，为空再进行删除操作
+                    Delete_dim(this.dimuser.emp_ID)
+                      .then((response)=>{
+                        if(response){
+                          AlertDialog.show({
+                            title:'提示',
+                            message:'删除成功',
+                            primaryButton:{
+                              value:'确认',
+                              action:()=>{
+                                router.back()
+                              }
+                            }
+                          })
+
+                          console.log('successed delete')
+                        }else{
+                          console.log('failed delete')
+                        }
+                      })
+                  }
+                }
+              })
 
             })
         }

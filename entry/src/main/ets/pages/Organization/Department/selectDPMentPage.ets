@@ -29,7 +29,7 @@ struct SelectPage {
     Column() {
       Row(){
         Column(){
-          Image($r('app.media.test1'))
+          Image($r("app.media.back"))
             // .fitOriginalSize(true)
             .width(30)
             .onClick(()=>{
@@ -112,7 +112,7 @@ struct SelectPage {
               }
               .padding({ top: 15, bottom: 10 });
             })
-            // 分页控件
+
 
           }
           else {
@@ -130,7 +130,6 @@ struct SelectPage {
 
       Row() {
         Button('上一页')
-          .borderRadius(8)
           .width(100)
           .height(30)
           .fontColor('black')

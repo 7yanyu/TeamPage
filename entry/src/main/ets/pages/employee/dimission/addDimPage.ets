@@ -1,15 +1,16 @@
 import router from '@ohos.router'
-import { Department } from '../../../entity/Department'
-import { Add_dep } from '../../../httpRequest/Department/depAdd'
+import { DimUser } from '../../../entity/DimUser'
+import {ADD_dim} from  '../../../httpRequest/dimission/addDim'
 @Entry
 @Component
-struct AddPage {
-  @State message: string = '增加部门'
-  @State department:Department=new Department(0,'','','','')
-  private selectedDate: Date = new Date()
-  // private item:Array<string>=['部门ID','部门名称','部门电话','成立时间','部门成立时间','部门简介']
-  build() {
-    Column({space:15}) {
+struct  AddDimPage{
+  @State message: string='新增离职'
+  @State dimuser:DimUser=new DimUser(0,'','','','',0,'',0,'','','')
+  private selectedDate: Date=new Date()
+  @State queryType: string = '男';
+
+  build(){
+    Column({space:15}){
       Row(){
         Column(){
           Image($r("app.media.back"))
@@ -29,57 +30,87 @@ struct AddPage {
 
       }.padding({top:15})
       .width('90%')
-
       Row({space:30}){
-        Text('部门ID')
+        Text('员工ID')
           .fontSize(20)
-
-        TextInput({placeholder:'请输入部门ID'})
+        TextInput({placeholder:'请输入员工ID'})
           .onChange((value)=>{
             const id=parseInt(value)
-            this.department.dep_ID=id
-          })
-          .placeholderColor('#C3C3C3')
+            this.dimuser.emp_ID=id
+          }) .placeholderColor('#C3C3C3')
 
       }
       .width('95%')
       .justifyContent(FlexAlign.Start)
 
-
       Row({space:15}){
-        Text('部门名称')
+        Text('员工姓名')
           .fontSize(20)
-
-        TextInput({placeholder:'请输入部门名称'})
+        TextInput({placeholder:'请输入员工姓名'})
           .onChange((value)=>{
-            this.department.dep_name=value
-          })
-          .placeholderColor('#C3C3C3')
-
+            this.dimuser.emp_name=value
+          }) .placeholderColor('#C3C3C3')
       }
       .width('95%')
       .justifyContent(FlexAlign.Start)
 
+      Row({space:50}){
+        Text('员工性别')
+          .fontSize(20)
+          .textAlign(TextAlign.Start)
+
+        Select([
+          { value: '男'},
+          { value: '女' }
+        ])
+          .selected(0)  // 默认选择为“男”
+          .font({ size: 18, weight: FontWeight.Medium })
+          .fontColor('#7BB6EB')
+          .selectedOptionFont({ size: 16, weight: FontWeight.Regular })
+          .optionFont({ size: 18, weight: FontWeight.Regular })
+          .onSelect((index: number) => {
+
+            this.queryType = index ===0 ? '男' : '女';
+            this.dimuser.gender=this.queryType
+
+            console.info('Selected query type:' + this.queryType);
+          })
+
+
+      }
+      .width('95%')
 
       Row({space:15}){
-        Text('部门电话')
+        Text('原岗位名称')
           .fontSize(20)
-
-        TextInput({placeholder:'请输入部门电话'})
+        TextInput({placeholder:'请输入员工原岗位名称'})
           .onChange((value)=>{
-            this.department.dep_phone=value
-          })
-          .placeholderColor('#C3C3C3')
+            this.dimuser.pos_name=value
+          }) .placeholderColor('#C3C3C3')
+
       }
       .width('95%')
       .justifyContent(FlexAlign.Start)
+
       Row({space:15}){
-        Text('成立时间')
+        Text('原部门名称')
+          .fontSize(20)
+        TextInput({placeholder:'请输入员工原部门名称'})
+          .onChange((value)=>{
+            this.dimuser.dep_name=value
+          }) .placeholderColor('#C3C3C3')
+
+      }
+      .width('95%')
+      .justifyContent(FlexAlign.Start)
+
+      Row({space:20}){
+        Text('离职日期')
           .fontSize(20)
 
-        Button(this.department.creat_date || '请选择日期')
+        Button(this.dimuser.dim_date|| ' 年 / 月 / 日 ')
           .backgroundColor('#F5F5F5')
-          .fontColor('#C3C3C3')
+          .fontColor('#459ED4')
           .onClick(() => {
             DatePickerDialog.show({
               start: new Date("2000-1-1"),
@@ -89,34 +120,39 @@ struct AddPage {
                 // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
                 this.selectedDate.setFullYear(value.year, value.month, value.day)
                 console.info("DatePickerDialog:onAccept()" + JSON.stringify(value))
-                this.department.creat_date = `${value.year}-${value.month+1}-${value.day}`
+                this.dimuser.dim_date = `${value.year}-${value.month + 1}-${value.day}`
               }
             })
           })
+
       }
       .width('95%')
       .justifyContent(FlexAlign.Start)
+
       Row(){
-        Text('部门简介')
+        Text('离职原因')
           .fontSize(20)
+
       }
       .width('95%')
       .justifyContent(FlexAlign.Start)
       Row(){
-        TextArea({placeholder:'     请输入部门简介'})
+        TextArea({placeholder:'请输入该员工离职的相关原因'})
           .onChange((value)=>{
-            this.department.detail=value
+            this.dimuser.dim_reason=value
           })
           .placeholderColor('#C3C3C3')
           .width('90%')
           .height('150')
       }
 
+
       Button('提交')
         .onClick(() => {
-          Add_dep(this.department)
+          //调用接口，离职
+          ADD_dim(this.dimuser)
             .then((response)=>{
-              if(response.toString()=='添加成功'){
+              if(response.toString()=='新增离职成功'){
                 AlertDialog.show({
                   title:'提示',
                   message:'添加成功,是否继续添加',
@@ -132,15 +168,48 @@ struct AddPage {
                   }
                 })
               }
-          })
+            })
+
+
         })
         .fontColor('black')
         .backgroundColor('#99D9EA')
         .width(100)
         .margin(20)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     .width('100%')
     .height('100%')
     .backgroundImageSize({width:'100%',height:'100%'})
+
   }
+
 }

@@ -12,12 +12,18 @@
     "pages/Organization/Department/selectDPMentPage",
     "pages/Organization/Department/addDPMentPage",
     "pages/Organization/Department/changeDPMentPage",
-    "pages/Organization/Department/deleteDPMentPage",
     "pages/Organization/Position/selectPosPage",
     "pages/Organization/Position/addPosPage",
     "pages/Organization/Position/changePosPage",
-    "pages/Organization/Position/deletePosPage",
     "pages/Organization/Position/posdetailsPage",
-    "pages/Organization/Department/depdetailsPage"
+    "pages/Organization/Department/depdetailsPage",
+    "pages/employee/dimission/dimDetailsPage",
+    "pages/employee/dimission/addDimPage",
+    "pages/employee/dimission/dimIndexPage",
+    "pages/employee/joined/addJoinPage",
+    "pages/employee/joined/joinIndexPage",
+    "pages/employee/move/moveIndexPage",
+    "pages/employee/move/addMovePage",
+    "pages/employee/move/moveDetailsPage"
   ]
 }

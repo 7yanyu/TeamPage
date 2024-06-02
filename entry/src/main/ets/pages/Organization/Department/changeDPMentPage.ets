@@ -12,7 +12,7 @@ struct AddPage {
     Column({space:15}) {
       Row(){
         Column(){
-          Image($r('app.media.test1'))
+          Image($r("app.media.back"))
             // .fitOriginalSize(true)
             .width(30)
             .onClick(()=>{
