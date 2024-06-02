@@ -70,10 +70,15 @@ struct MonthlyReportPage {
 
             })
           })
-
-
       }
-      .margin(5)
+      .margin({top:30,bottom:20})
+
+      Button('查询报表')
+        .width(100)
+        .onClick(()=>{
+          //接口
+        })
+        .margin({top:30})
     }
     .width('100%')
     .height('100%')
