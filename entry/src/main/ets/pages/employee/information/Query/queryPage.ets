@@ -10,7 +10,7 @@ import { queryRequest_4 } from '../../../../httpRequest/employee/information/que
 @Component
 struct QueryPage {
   @State message: string = '员工查询'
-  // @State emp:employee=new employee()
+  @State emp:employee=new employee()
   @State emps:employee[]=[]
   @State currentPage:number=1
   @State itemsPerPage:number=9
@@ -19,7 +19,7 @@ struct QueryPage {
   @State empId:string=''
   @State posId:string=''
   @State depId:string=''
-  @State enterMode:string=''
+  @State enterMode:string='                  '
   private list01:Array<string>=['员工ID','岗位ID','部门ID']
 
 
@@ -91,9 +91,10 @@ struct QueryPage {
           .onClick(()=>{
             this.posId=''
             this.depId=''
-            this.enterMode=''
+            this.enterMode='                  '
           })
           .onChange((id)=>{
+
             this.empId=id
             this.pick=1
 
@@ -103,9 +104,10 @@ struct QueryPage {
           .onClick(()=>{
             this.empId=''
             this.depId=''
-            this.enterMode=''
+            this.enterMode='                  '
           })
           .onChange((id)=>{
+
             this.posId=id
             this.pick=2
 
@@ -115,12 +117,12 @@ struct QueryPage {
           .onClick(()=>{
             this.posId=''
             this.empId=''
-            this.enterMode=''
+            this.enterMode='                  '
           })
           .onChange((id)=>{
+
             this.depId=id
             this.pick=3
-
           })
       }
       .width('90%')
@@ -131,24 +133,25 @@ struct QueryPage {
           .fontWeight(FontWeight.Bold)
         Select([{value:'普通入职'},
           {value:'人才库入职'}])
-          .value('                  ')
+          .value(this.enterMode)
           .backgroundColor('#F2F2F2')
           .width(150)
+          .onClick(()=>{
+            if(this.empId!=''||this.posId!=''||this.depId!=''){
+              this.empId=''
+              this.posId=''
+              this.depId=''
+            }
+          })
           .onSelect((index)=>{
             if(index==0){
               this.enterMode='普通入职'
-              this.pick=4
-              this.posId=''
-              this.depId=''
-              this.empId=''
             }else {
               this.enterMode='人才库入职'
-              this.pick=4
-              this.posId=''
-              this.depId=''
-              this.empId=''
             }
+            this.pick=4
           })
+
         Button('查询')
           .type(ButtonType.Normal)
           .borderRadius(10)
@@ -167,7 +170,7 @@ struct QueryPage {
               queryRequest_1(parseInt(this.empId)).then(response=>{
                 if(response){
                   this.hasSearch=true
-                  this.emps=response
+                  this.emp=response
                 }
               })
             }else if(this.pick==2){
@@ -185,7 +188,7 @@ struct QueryPage {
                 }
               })
             }else if(this.pick==4){
-              queryRequest_4().then(response=>{
+              queryRequest_4(this.enterMode).then(response=>{
                 if(response){
                   this.hasSearch=true
                   this.emps=response
@@ -205,7 +208,7 @@ struct QueryPage {
 
       Row({space:10}){
         //id,name,gender,phone
-        //                            操作
+        //                            详情
         Text('员工ID').fontWeight(FontWeight.Bold).width(50).margin({left:10}).textAlign(TextAlign.Center)
         Text('员工姓名').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Center)
         Text('性别').fontWeight(FontWeight.Bold).width(40).textAlign(TextAlign.Center)
@@ -221,62 +224,89 @@ struct QueryPage {
 
       Column({space:10}){
         if(this.hasSearch){
-          ForEach(this.emps.slice((this.currentPage-1)*this.itemsPerPage,this.currentPage*this.itemsPerPage),
-            (item:employee)=>{
-              Row({space:10}){
-                Text(item.emp_ID.toString()).width(50).margin({left:10}).textAlign(TextAlign.Center)
-                Text(item.emp_name).width(70).textAlign(TextAlign.Center)
-                Text(item.gender).width(40).fontSize(15).textAlign(TextAlign.Center)
-                Text(item.phone).fontSize(12).width(100).textAlign(TextAlign.Center)
-                Text('详情').fontColor('#36D').width(40).textAlign(TextAlign.Center)
-                  .onClick(()=>{
-                    console.log('操作按钮被点击')
-                    console.log(JSON.stringify(item))
-                    router.pushUrl({
-                      url:'pages/employee/information/Query/empDetailPage',
-                      params: {
-                        employee: JSON.stringify(item)
-                      }
-                    })
+          if(this.pick==1)
+          {
+            Row({space:10}){
+              Text(this.emp.emp_ID.toString()).width(50).margin({left:10}).textAlign(TextAlign.Center)
+              Text(this.emp.emp_name).width(70).textAlign(TextAlign.Center)
+              Text(this.emp.gender).width(40).fontSize(15).textAlign(TextAlign.Center)
+              Text(this.emp.phone).fontSize(12).width(100).textAlign(TextAlign.Center)
+              Text('详情').fontColor('#36D').width(40).textAlign(TextAlign.Center)
+                .onClick(()=>{
+                  console.log('操作按钮被点击')
+                  console.log(JSON.stringify(this.emp))
+                  router.pushUrl({
+                    url:'pages/employee/information/Query/empDetailPage',
+                    params: {
+                      employee: JSON.stringify(this.emp)
+                    }
                   })
-              }
-              .width('95%')
+                })
+            }
+            .width('95%')
+          }else {
+            ForEach(this.emps.slice((this.currentPage-1)*this.itemsPerPage,this.currentPage*this.itemsPerPage),
+              (item:employee)=>{
+                Row({space:10}){
+                  Text(item.emp_ID.toString()).width(50).margin({left:10}).textAlign(TextAlign.Center)
+                  Text(item.emp_name).width(70).textAlign(TextAlign.Center)
+                  Text(item.gender).width(40).fontSize(15).textAlign(TextAlign.Center)
+                  Text(item.phone).fontSize(12).width(100).textAlign(TextAlign.Center)
+                  Text('详情').fontColor('#36D').width(40).textAlign(TextAlign.Center)
+                    .onClick(()=>{
+                      console.log('操作按钮被点击')
+                      console.log(JSON.stringify(item))
+                      router.pushUrl({
+                        url:'pages/employee/information/Query/empDetailPage',
+                        params: {
+                          employee: JSON.stringify(item)
+                        }
+                      })
+                    })
+                }
+                .width('95%')
 
-            })
-        }
+              })
+          }
+
+
+        }    //hasSearch
       }
       .height('65%')
 
 
       //分页器
-      Row() {
-        Button('上一页')
-          .width(100)
-          .height(30)
-          .fontColor('black')
-          .backgroundColor('')
-          .borderRadius(5)
-          .onClick(() => {
-            if (this.currentPage > 1) {
-              this.currentPage--;
-            }
-          });
-        Text(`第 ${this.currentPage} 页`);
+      if(this.hasSearch){
+        Row() {
+          Button('上一页')
+            .width(100)
+            .height(30)
+            .fontColor('black')
+            .backgroundColor('')
+            .borderRadius(5)
+            .onClick(() => {
+              if (this.currentPage > 1) {
+                this.currentPage--;
+              }
+            });
+          Text(`第 ${this.currentPage} 页`);
 
-        Button('下一页')
-          .width(100)
-          .height(30)
-          .fontColor('black')
-          .backgroundColor('')
-          .borderRadius(5)
-          .onClick(() => {
-            const maxPage = Math.ceil(this.emps.length / this.itemsPerPage);
-            if (this.currentPage < maxPage) {
-              this.currentPage++;
-            }
-          })
-      }.alignItems(VerticalAlign.Center)
-      .height('5%')
+          Button('下一页')
+            .width(100)
+            .height(30)
+            .fontColor('black')
+            .backgroundColor('')
+            .borderRadius(5)
+            .onClick(() => {
+              const maxPage = Math.ceil(this.emps.length / this.itemsPerPage);
+              if (this.currentPage < maxPage) {
+                this.currentPage++;
+              }
+            })
+        }.alignItems(VerticalAlign.Center)
+        .height('5%')
+      }
+
 
     }
     .width('100%')

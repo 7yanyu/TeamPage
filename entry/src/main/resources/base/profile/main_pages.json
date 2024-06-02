@@ -30,6 +30,8 @@
     "pages/employee/information/familyPage",
     "pages/employee/information/monthlyReportPage",
     "pages/employee/information/Try/OpTryPage",
-    "pages/employee/information/Query/empDetailPage"
+    "pages/employee/information/Query/empDetailPage",
+    "pages/employee/information/OpCareerPage",
+    "pages/employee/information/OpLanguagePage"
   ]
 }
