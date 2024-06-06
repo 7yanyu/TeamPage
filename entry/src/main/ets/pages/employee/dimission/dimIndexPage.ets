@@ -6,6 +6,7 @@ import {dimby_empID} from '../../../httpRequest/dimission/dimby_empID'
 import { dimbyDate } from '../../../httpRequest/dimission/dimbyDate'
 import {dimfind_All} from '../../../httpRequest/dimission/dimfind_All'
 import { ADD_dim } from '../../../httpRequest/Dimission/ADD_dim'
+import { findByProcess } from '../../../httpRequest/Dimission/FindByProcess'
 @Entry
 @Component
 struct dimIndexPage {
@@ -13,15 +14,16 @@ struct dimIndexPage {
   @State emp_ID :string=''
   @State pos_ID: string = ''
   @State dep_ID: string = ''
-  @State startDate: string=''
-  @State endDate: string=''
+  // @State startDate: string=''
+  // @State endDate: string=''
+  @State process:string=''
   private selectedDate: Date = new Date()
   @State dimusers:DimUser[]=[]
   @State hasSearched: boolean = false; // 用于跟踪是否进行了查询
   @State currentPage: number = 1; // 当前页码
   @State itemsPerPage: number = 7; // 每页显示的项目数量
 
-  @State dimuser:DimUser=new DimUser(0,'','','','',0,'',0,'','','','')
+  @State dimuser:DimUser=new DimUser()
   // private selectedDateAdd: Date=new Date()
   @State queryType: string = '男';
 
@@ -61,208 +63,43 @@ struct dimIndexPage {
           }.padding({top:15})
           .width('90%')
 
-          Row({space:65}){
-            Text('员工ID').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
-            Text('岗位ID').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
-            Text('部门ID').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
-
-          }.padding({top:5})
-          .width('90%')
-          .padding({top:10})
-
-          Row({space:10}){
-            TextInput({ placeholder: '请输入员工id',text:this.emp_ID })
-              .onChange((value: string) => {
-                if (this.pos_ID != '' || this.dep_ID != '' || this.startDate != '' || this.endDate != '') {
-                  this.pos_ID = ''
-                  this.dep_ID = ''
-                  this.startDate = ''
-                  this.endDate = ''
-                }
-                const numericValue = parseInt(value, 10)
-                this.emp_ID = isNaN(numericValue) ? '' : value
-              })
-              .padding({top:10,left:5})
-              .width('30%')
-
-            TextInput({ placeholder: '请输入岗位id',text:this.pos_ID })
-              .onChange((value: string) => {
-                if (this.emp_ID!= '' || this.dep_ID != '' || this.startDate != '' || this.endDate != '') {
-                  this.emp_ID = ''
-                  this.dep_ID = ''
-                  this.startDate = ''
-                  this.endDate = ''
-                }
-                const numericValue = parseInt(value, 10)
-                this.pos_ID = isNaN(numericValue) ? '' : value
-              })
-              .padding({top:10,left:20})
-              .width('35%')
-
-            TextInput({ placeholder: '请输入部门id',text:this.dep_ID })
-              .onChange((value: string) => {
-                if (this.emp_ID!= '' || this.pos_ID != '' || this.startDate != '' || this.endDate != '') {
-                  this.emp_ID = ''
-                  this.pos_ID = ''
-                  this.startDate = ''
-                  this.endDate = ''
-                }
-                const numericValue = parseInt(value, 10)
-                this.dep_ID = isNaN(numericValue) ? '' : value
-              })
-              .padding({top:10,left:5})
-              .width('30%')
-          }.padding({top:5})
-
-          Row(){
+          Row({space:20}){
             Text('审批状态')
               .fontWeight(FontWeight.Bold)
               .width('100')
               .textAlign(TextAlign.Start)
-          }.width('95%')
-
-          Row({space:20}){
-
-            /*Button(this.startDate||'开始时间')
-              .backgroundColor('#F5F5F5')
-              .fontColor('#459ED4')
-              .width('30%')
-              .onClick(() => {
-                if (this.pos_ID != '' || this.dep_ID != '' || this.emp_ID != '') {
-                  this.pos_ID = ''
-                  this.dep_ID = ''
-                  this.emp_ID = ''
+            Select([{value:'待处理'},
+              {value:'已处理'},
+              {value:'已拒绝'}])
+              .value('           ')
+              .onSelect(index=>{
+                if(index==0){
+                  this.process='待处理'
+                }else if(index==1){
+                  this.process='已处理'
+                }else if(index==2){
+                  this.process='已拒绝'
+                }else{
+                  this.process=null
                 }
-                DatePickerDialog.show({
-                  start: new Date("2000-1-1"),
-                  end: new Date("2100-12-31"),
-                  selected: new Date(this.startDate),
-                  onAccept: (value: DatePickerResult) => {
-                    // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
-                    this.selectedDate.setFullYear(value.year, value.month, value.day)
-                    console.info("DatePickerDialog:onAccept()" + JSON.stringify(value))
-                    this.startDate = `${value.year}-${value.month+1}-${value.day}`
-                  }
-                })
               })
-            Divider().width(10).height(30).color('black') // 添加一条直线
 
-            Button(this.endDate||'截止时间')
-              .width('30%')
-              .backgroundColor('#F5F5F5')
-              .fontColor('#459ED4')
-              .onClick(() => {
-                if (this.pos_ID != '' || this.dep_ID != '' || this.emp_ID != '') {
-                  this.pos_ID = ''
-                  this.dep_ID = ''
-                  this.emp_ID = ''
-                }
-                DatePickerDialog.show({
-                  start: new Date("2000-1-1"),
-                  end: new Date("2100-12-31"),
-                  selected: new Date(this.endDate),
-                  onAccept: (value: DatePickerResult) => {
-                    // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
-                    this.selectedDate.setFullYear(value.year, value.month, value.day)
-                    console.info("DatePickerDialog:onAccept()" + JSON.stringify(value))
-                    this.endDate = `${value.year}-${value.month+1}-${value.day}`
-                  }
-                })
-              })*/
+
             Button('查询')
               .fontColor('black')
               .backgroundColor('#99D9EA')
               .onClick(() => {
-                if(this.dep_ID!=''){
-                  //清空已有数据
-                  this.dimusers=[]
-                  // 设置 hasSearched 为 false，表示查询过程中
-                  this.hasSearched = false;
-                  this.currentPage=1
-                  //根据部门ID进行查询
-                  dimby_depID(parseInt(this.dep_ID)).then((dimusers)=>{
-                    this.dimusers=dimusers
-                    this.hasSearched = true;
-                    console.log(JSON.stringify(this.dimusers, null, 2))
-                    console.log(this.dimusers.length.toString())
-                  }).catch(error => {
-                    console.error('Error fetching department:', error);
-                    this.hasSearched = true;
-                    this.dimusers = []; // 确保在错误情况下清空显示的数据
-                    this.hasSearched = true; // 查询完成后设置为已进行查询
+                //接口
+                console.log(this.process)
+
+                findByProcess(this.process)
+                  .then(response=>{
+                    if(response){
+                      this.dimusers=response
+                      this.hasSearched=true
+                    }
                   })
-                }
-                else if(this.pos_ID!=''){
-                  //清空已有数据
-                  this.dimusers=[]
-                  // 设置 hasSearched 为 false，表示查询过程中
-                  this.hasSearched = false;
-                  this.currentPage=1
-                  //根据部门ID进行查询
-                  dimby_posID(parseInt(this.pos_ID)).then((dimusers)=>{
-                    this.dimusers=dimusers
-                    this.hasSearched = true;
-                    console.log(JSON.stringify(this.dimusers, null, 2))
-                    console.log(this.dimusers.length.toString())
-                  }).catch(error => {
-                    console.error('Error fetching department:', error);
-                    this.dimusers = []; // 确保在错误情况下清空显示的数据
-                    this.hasSearched = true; // 查询完成后设置为已进行查询
-                  })
-                }
-                else if(this.emp_ID!=''){
-                  //清空已有数据
-                  this.dimusers=[]
-                  // 设置 hasSearched 为 false，表示查询过程中
-                  this.hasSearched = false;
-                  this.currentPage=1
-                  //根据部门ID进行查询
-                  dimby_empID(parseInt(this.emp_ID)).then((dimusers)=>{
-                    this.dimusers=dimusers
-                    this.hasSearched = true;
-                    console.log(JSON.stringify(this.dimusers, null, 2))
-                    console.log(this.dimusers.length.toString())
-                  }).catch(error => {
-                    console.error('Error fetching department:', error);
-                    this.dimusers = []; // 确保在错误情况下清空显示的数据
-                    this.hasSearched = true; // 查询完成后设置为已进行查询
-                  })
-                }
-                else if(this.startDate!=''||this.endDate!=''){
-                  //清空已有数据
-                  this.dimusers=[]
-                  // 设置 hasSearched 为 false，表示查询过程中
-                  this.hasSearched = false;
-                  this.currentPage=1
-                  //根据部门ID进行查询
-                  dimbyDate(this.startDate,this.endDate).then((dimusers)=>{
-                    this.dimusers=dimusers
-                    this.hasSearched = true;
-                    console.log(JSON.stringify(this.dimusers, null, 2))
-                    console.log(this.dimusers.length.toString())
-                  }).catch(error => {
-                    console.error('Error fetching department:', error);
-                    this.dimusers = []; // 确保在错误情况下清空显示的数据
-                    this.hasSearched = true; // 查询完成后设置为已进行查询
-                  })
-                }
-                else{
-                  this.dimusers=[]
-                  // 设置 hasSearched 为 false，表示查询过程中
-                  this.hasSearched = false;
-                  this.currentPage=1
-                  //根据部门ID进行查询
-                  dimfind_All().then((dimusers)=>{
-                    this.dimusers=dimusers
-                    this.hasSearched = true;
-                    console.log(JSON.stringify(this.dimusers, null, 2))
-                    console.log(this.dimusers.length.toString())
-                  }).catch(error => {
-                    console.error('Error fetching department:', error);
-                    this.dimusers = []; // 确保在错误情况下清空显示的数据
-                    this.hasSearched = true; // 查询完成后设置为已进行查询
-                  })
-                }
+
               })
               .width('20%')
               .padding(12)
@@ -274,7 +111,7 @@ struct dimIndexPage {
           Row({space:10}) {
             Text('员工ID').fontWeight(FontWeight.Bold).width(50).textAlign(TextAlign.Center);
             Text('员工姓名').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
-            Text('申请时间').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
+            Text('审批时间').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
             Text('审批状态').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
           }
           .width('95%')
@@ -289,8 +126,8 @@ struct dimIndexPage {
 
                     Text(dimuser.emp_ID.toString()).width(60).textAlign(TextAlign.Center);
                     Text(dimuser.emp_name).width(70).textAlign(TextAlign.Start);
-                    Text(dimuser.date).width(70).textAlign(TextAlign.Start);
-                    Text(dimuser.dim_date).width(70).textAlign(TextAlign.Start);
+                    Text(dimuser.process_date).width(70).textAlign(TextAlign.Start);
+                    Text(dimuser.process_state).width(70).textAlign(TextAlign.Start);
                     Text('查看')
                       .fontColor('#8AB7FF')
                       .onClick(() => this.onClickView(dimuser));
@@ -298,15 +135,14 @@ struct dimIndexPage {
                   }
                   .padding({ top: 15, bottom: 10 });
                 })
-              }
-              else {
+              } else {
                 // 如果没有结果，显示一条提示信息
                 Text('没有查询到相关离职信息')
                   .fontColor('red')
                   .padding({ top: 15, bottom: 10 });
               }
             }
-          }.height('65%')
+          }.height('75%')
           .width('100%')
 
           Row() {
@@ -341,9 +177,11 @@ struct dimIndexPage {
         }
         .width('100%')
         .height('100%')
+        .backgroundColor('#E6E6E6')
       }.tabBar('离职管理')
 
-      TabContent(){
+      //新增
+      /*TabContent(){
         Column({space:15}){
           Row(){
             Column(){
@@ -513,7 +351,7 @@ struct dimIndexPage {
         }
         .width('100%')
         .height('100%')
-      }.tabBar('新增离职')
+      }.tabBar('新增离职')*/
 
       TabContent(){
 

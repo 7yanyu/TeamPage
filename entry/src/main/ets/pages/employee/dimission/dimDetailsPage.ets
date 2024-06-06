@@ -1,11 +1,22 @@
 import router from '@ohos.router'
 import { DimUser } from '../../../entity/DimUser'
+import { Process } from '../../../entity/Process'
+import { agreeDim } from '../../../httpRequest/Dimission/agreeDim'
 import {Delete_dim} from  '../../../httpRequest/dimission/Delete_dim'
+import { rejectDim } from '../../../httpRequest/Dimission/rejectDim'
 @Entry
 @Component
 struct DetailsPage {
   @State message: string = '离职详情'
-  @State dimuser:DimUser| null=null
+  @State dimuser:DimUser=new DimUser()
+  @State empId:string=''
+  @State depId:string=''
+  @State posId:string=''
+
+  @State process:Process=new Process(0,'')
+  private selectedDate: Date = new Date()
+
+
   onPageShow() {
     console.log('onInit called'); // 确认 onInit 被调用
     const params = router.getParams() as { dimuser: string }; // 类型断言
@@ -16,6 +27,12 @@ struct DetailsPage {
       try {
         const dimuserData = JSON.parse(dimuserJson);
         this.dimuser=dimuserData
+        this.empId=this.dimuser.emp_ID.toString()
+        this.depId=this.dimuser.dep_ID.toString()
+        this.posId=this.dimuser.pos_ID.toString()
+
+        console.log('empId:'+this.empId)
+        console.log('dimuser:'+JSON.stringify(this.dimuser))
       } catch (e) {
         console.error('Failed to dimuser data', e);
       }
@@ -46,7 +63,7 @@ struct DetailsPage {
           .width(80)
 
         if(this.dimuser){
-          Text(this.dimuser.emp_name.toString())
+          Text(this.dimuser.emp_name)
             .fontSize(30)
             .textAlign(TextAlign.Start)
 
@@ -63,7 +80,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.emp_ID.toString())
+            Text(this.empId)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -76,7 +93,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.gender.toString())
+            Text(this.dimuser.gender)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -89,12 +106,33 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.dim_date.toString())
-              .fontSize(25)
-              .textAlign(TextAlign.Start)
-              .width('70%')
-              .padding({top:8})
+            // Text(this.dimuser.process_date)
+            //   .fontSize(25)
+            //   .textAlign(TextAlign.Start)
+            //   .width('70%')
+            //   .padding({top:8})
+
+            Button(this.process.date|| ' 年 / 月 / 日 ')
+              .backgroundColor('#F5F5F5')
+              .fontColor('#459ED4')
+              .onClick(() => {
+                DatePickerDialog.show({
+                  start: new Date("2000-1-1"),
+                  end: new Date("2100-12-31"),
+                  selected: this.selectedDate,
+                  onAccept: (value: DatePickerResult) => {
+                    // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
+                    this.selectedDate.setFullYear(value.year, value.month, value.day)
+                    console.info("DatePickerDialog:onAccept()" + `${value.year}-${value.month + 1}-${value.day}`)
+                    this.process.date = `${value.year}-${value.month + 1}-${value.day}`
+                  }
+                })
+              })
+
           }
+          .width('100%')
+
+
           Row() {
             Text('原岗位ID')
               .fontSize(25)
@@ -102,7 +140,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.pos_ID.toString())
+            Text(this.posId)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -116,7 +154,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.pos_name.toString())
+            Text(this.dimuser.pos_name)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -131,7 +169,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.dep_ID.toString())
+            Text(this.depId)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -145,7 +183,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.dep_name.toString())
+            Text(this.dimuser.dep_name)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -158,7 +196,7 @@ struct DetailsPage {
               .textAlign(TextAlign.Start)
               .width('40%')
               .padding({top:8})
-            Text(this.dimuser.date.toString())
+            Text(this.dimuser.date)
               .fontSize(25)
               .textAlign(TextAlign.Start)
               .width('70%')
@@ -173,7 +211,7 @@ struct DetailsPage {
                 .width('40%')
                 .padding({top:8})
 
-              Text(this.dimuser.confirm_date.toString())
+              Text(this.dimuser.confirm_date)
                 .fontSize(25)
                 .textAlign(TextAlign.Start)
                 .width('70%')
@@ -195,8 +233,8 @@ struct DetailsPage {
 
           }
           Row(){
-            if (this.dimuser.dim_reason !== null ){
-              Text(this.dimuser.dim_reason)
+            if (this.dimuser.reason !== null ){
+              Text(this.dimuser.reason)
                 .fontSize(25)
                 .textAlign(TextAlign.Start)
                 .width('80%')
@@ -215,14 +253,14 @@ struct DetailsPage {
         .alignItems(HorizontalAlign.Center)
         .shadow({ color: 'gray', radius: 15 })
         Row(){
-          Text('删除')
-            .fontColor('red')
-            .fontSize('20')
+          Text('同意')
+            .fontColor('blue')
+            .fontSize(20)
             .padding({top:28})
             .onClick(()=>{
               AlertDialog.show({
                 title:'提示',
-                message:'是否确认删除该离职信息',
+                message:'同意该员工的离职',
                 primaryButton:{
                   value:'No',
                   action:()=>{}
@@ -230,8 +268,8 @@ struct DetailsPage {
                 secondaryButton:{
                   value:'Yes',
                   action:()=>{
-                    //先查询部门内人员是否为空，为空再进行删除操作
-                    Delete_dim(this.dimuser.emp_ID)
+                    this.process.id=this.dimuser.emp_ID
+                    agreeDim(this.process)
                       .then((response)=>{
                         if(response){
                           AlertDialog.show({
@@ -253,9 +291,49 @@ struct DetailsPage {
                   }
                 }
               })
+            })
+          Text('拒绝')
+            .fontColor('red')
+            .fontSize('20')
+            .padding({top:28})
+            .onClick(()=>{
+              AlertDialog.show({
+                title:'提示',
+                message:'拒绝该员工的离职',
+                primaryButton:{
+                  value:'No',
+                  action:()=>{}
+                },
+                secondaryButton:{
+                  value:'Yes',
+                  action:()=>{
+                    this.process.id=this.dimuser.emp_ID
+                    rejectDim(this.process)
+                      .then((response)=>{
+                        if(response){
+                          AlertDialog.show({
+                            title:'提示',
+                            message:'删除成功',
+                            primaryButton:{
+                              value:'确认',
+                              action:()=>{
+                                router.back()
+                              }
+                            }
+                          })
 
+                          console.log('successed delete')
+                        }else{
+                          console.log('failed delete')
+                        }
+                      })
+                  }
+                }
+              })
             })
         }
+        .width(250)
+        .justifyContent(FlexAlign.SpaceAround)
 
 
       }

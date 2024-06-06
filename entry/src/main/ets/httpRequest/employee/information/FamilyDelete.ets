@@ -6,13 +6,13 @@ import { Family } from '../../../pages/employee/information/familyPage';
 export function familyDelete(id:number):Promise<boolean>{
   return new Promise<boolean>((resolve,reject)=>{
     let httpRequest=http.createHttp()
-    const url=Baseurl()+'family/delete'
+    const url=Baseurl()+'family/delete?relation_ID='+id
 
     httpRequest.request(
       url,
       {
-        method:http.RequestMethod.DELETE,
-        extraData:JSON.stringify(id)
+        method:http.RequestMethod.DELETE
+
       }
     )
       .then(response=>{
