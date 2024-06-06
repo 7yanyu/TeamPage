@@ -1,5 +1,6 @@
 import router from '@ohos.router'
 import { familyAdd } from '../../../httpRequest/employee/information/FamilyAdd'
+import { familyChange } from '../../../httpRequest/employee/information/FamilyChange'
 import { familyDelete } from '../../../httpRequest/employee/information/FamilyDelete'
 import { familyFind } from '../../../httpRequest/employee/information/FamilyFind'
 @Entry
@@ -236,7 +237,18 @@ struct FamilyPage {
               Button('提交')
                 .width(100)
                 .onClick(()=>{
-                  familyAdd(this.family)
+                  familyAdd(this.family).then(response=>{
+                    if(response){
+                      AlertDialog.show({
+                        title:'提示',
+                        message:'新增成功',
+                        primaryButton:{
+                          value:'确认',
+                          action:()=>{}
+                        }
+                      })
+                    }
+                  })
                 })
                 .margin({top:50})
             }
@@ -326,7 +338,18 @@ struct FamilyPage {
               Button('修改')
                 .width(100)
                 .onClick(()=>{
-                  //
+                  familyChange(this.family).then(response=>{
+                    if(response){
+                      AlertDialog.show({
+                        title:'提示',
+                        message:'修改成功',
+                        primaryButton:{
+                          value:'确认',
+                          action:()=>{}
+                        }
+                      })
+                    }
+                  })
                 })
                 .margin({top:50})
 
@@ -387,12 +410,18 @@ struct FamilyPage {
                     secondaryButton:{
                       value:'是',
                       action:()=>{
-                        familyDelete(this.family.relation_ID)
-                          /*.then(response=>{
-                            if(response){
-
-                            }
-                          })*/
+                        familyDelete(this.family.relation_ID).then(response=>{
+                          if(response){
+                            AlertDialog.show({
+                              title:'提示',
+                              message:'删除成功',
+                              primaryButton:{
+                                value:'确认',
+                                action:()=>{}
+                              }
+                            })
+                          }
+                        })
                       }
                     }
                   })
