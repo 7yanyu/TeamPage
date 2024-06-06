@@ -1,4 +1,5 @@
 import router from '@ohos.router'
+import { familyAdd } from '../../../httpRequest/employee/information/FamilyAdd'
 import { familyDelete } from '../../../httpRequest/employee/information/FamilyDelete'
 import { familyFind } from '../../../httpRequest/employee/information/FamilyFind'
 @Entry
@@ -235,7 +236,7 @@ struct FamilyPage {
               Button('提交')
                 .width(100)
                 .onClick(()=>{
-                  //
+                  familyAdd(this.family)
                 })
                 .margin({top:50})
             }

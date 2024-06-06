@@ -33,7 +33,6 @@
     "pages/employee/information/Query/empDetailPage",
     "pages/employee/information/OpCareerPage",
     "pages/employee/information/OpLanguagePage",
-    "pages/employee/dimission/addDimPage",
     "pages/employee/dimission/dimDetailsPage",
     "pages/employee/joined/addJoinPage",
     "pages/employee/move/addMovePage",

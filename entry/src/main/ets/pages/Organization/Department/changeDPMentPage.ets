@@ -5,8 +5,8 @@ import { Change_dep } from '../../../httpRequest/Department/depChange'
 @Component
 struct AddPage {
   @State message: string = '修改部门'
-  @State department:Department=new Department(0,'','','','')
-  private selectedDate: Date = new Date()
+  @State departmentChange:Department=new Department(0,'','','','')
+  private selectedDateChange: Date = new Date()
   // private item:Array<string>=['部门ID','部门名称','部门电话','成立时间','部门成立时间','部门简介']
   build() {
     Column({space:15}) {
@@ -37,7 +37,7 @@ struct AddPage {
         TextInput({placeholder:'请输入部门ID'})
           .onChange((value)=>{
             const id=parseInt(value)
-            this.department.dep_ID=id
+            this.departmentChange.dep_ID=id
           })
           .placeholderColor('#C3C3C3')
 
@@ -52,7 +52,7 @@ struct AddPage {
 
         TextInput({placeholder:'请输入部门名称'})
           .onChange((value)=>{
-            this.department.dep_name=value
+            this.departmentChange.dep_name=value
           })
           .placeholderColor('#C3C3C3')
 
@@ -67,7 +67,7 @@ struct AddPage {
 
         TextInput({placeholder:'请输入部门电话'})
           .onChange((value)=>{
-            this.department.dep_phone=value
+            this.departmentChange.dep_phone=value
           })
           .placeholderColor('#C3C3C3')
       }
@@ -77,19 +77,19 @@ struct AddPage {
         Text('成立时间')
           .fontSize(20)
 
-        Button(this.department.creat_date || '请选择日期')
+        Button(this.departmentChange.creat_date || '请选择日期')
           .backgroundColor('#F5F5F5')
           .fontColor('#C3C3C3')
           .onClick(() => {
             DatePickerDialog.show({
               start: new Date("2000-1-1"),
               end: new Date("2100-12-31"),
-              selected: this.selectedDate,
+              selected: this.selectedDateChange,
               onAccept: (value: DatePickerResult) => {
                 // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
-                this.selectedDate.setFullYear(value.year, value.month, value.day)
+                this.selectedDateChange.setFullYear(value.year, value.month, value.day)
                 console.info("DatePickerDialog:onAccept()" + JSON.stringify(value))
-                this.department.creat_date = `${value.year}-${value.month + 1}-${value.day}`
+                this.departmentChange.creat_date = `${value.year}-${value.month + 1}-${value.day}`
               }
             })
           })
@@ -106,7 +106,7 @@ struct AddPage {
       Row(){
         TextArea({placeholder:'     请输入部门简介'})
           .onChange((value)=>{
-            this.department.detail=value
+            this.departmentChange.detail=value
           })
           .placeholderColor('#C3C3C3')
           .width('90%')
@@ -115,7 +115,7 @@ struct AddPage {
 
       Button('提交')
         .onClick(() => {
-          Change_dep(this.department)
+          Change_dep(this.departmentChange)
             .then((response)=>{
               if(response==true){
                 AlertDialog.show({

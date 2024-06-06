@@ -5,8 +5,8 @@ import { Change_pos } from '../../../httpRequest/Position/posChange'
 @Component
 struct ChangePosPage {
   @State message: string = '修改岗位'
-  @State pos:Position=new Position(0,'','','','','')
-  private selectedDate: Date = new Date()
+  @State posChange:Position=new Position(0,'','','','','')
+  private selectedDateChange: Date = new Date()
 
   build() {
     Column({space:10}) {
@@ -36,7 +36,7 @@ struct ChangePosPage {
         TextInput({placeholder:'请输入岗位ID'})
           .onChange((value)=>{
             const id=parseInt(value)
-            this.pos.pos_ID=id
+            this.posChange.pos_ID=id
           }).placeholderColor('#C3C3C3')
       }
       .width('95%')
@@ -49,7 +49,7 @@ struct ChangePosPage {
           .fontSize(20)
         TextInput({placeholder:'请输入岗位名称'})
           .onChange((value)=>{
-            this.pos.pos_name=value
+            this.posChange.pos_name=value
           }) .placeholderColor('#C3C3C3')
       }
       .width('95%')
@@ -60,19 +60,19 @@ struct ChangePosPage {
         Text('成立时间')
           .fontSize(20)
 
-        Button(this.pos.creat_date || '请选择日期')
+        Button(this.posChange.creat_date || '请选择日期')
           .backgroundColor('#F5F5F5')
           .fontColor('#C3C3C3')
           .onClick(() => {
             DatePickerDialog.show({
               start: new Date("2000-1-1"),
               end: new Date("2100-12-31"),
-              selected: this.selectedDate,
+              selected: this.selectedDateChange,
               onAccept: (value: DatePickerResult) => {
                 // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
-                this.selectedDate.setFullYear(value.year, value.month, value.day)
+                this.selectedDateChange.setFullYear(value.year, value.month, value.day)
                 console.info("DatePickerDialog:onAccept()" + JSON.stringify(value))
-                this.pos.creat_date = `${value.year}-${value.month + 1}-${value.day}`
+                this.posChange.creat_date = `${value.year}-${value.month + 1}-${value.day}`
               }
             })
           })
@@ -86,7 +86,7 @@ struct ChangePosPage {
           .fontSize(20)
         TextInput({placeholder:'请输入岗位所属部门ID'})
           .onChange((value)=>{
-            this.pos.dep_ID=value
+            this.posChange.dep_ID=value
           })   .placeholderColor('#C3C3C3')
       }
       .width('95%')
@@ -97,7 +97,7 @@ struct ChangePosPage {
           .fontSize(20)
         TextInput({placeholder:'请输入岗位所属部门名称'})
           .onChange((value)=>{
-            this.pos.dep_name=value
+            this.posChange.dep_name=value
           }) .placeholderColor('#C3C3C3')
       }
       .width('95%')
@@ -112,7 +112,7 @@ struct ChangePosPage {
       Row(){
         TextArea({placeholder:'请输入该岗位的相关介绍'})
           .onChange((value)=>{
-            this.pos.detail=value
+            this.posChange.detail=value
           })
           .placeholderColor('#C3C3C3')
           .width('90%')
@@ -122,7 +122,7 @@ struct ChangePosPage {
       Button('提交')
         .onClick(() => {
           //调用接口，修改岗位
-          Change_pos(this.pos)
+          Change_pos(this.posChange)
             .then((response)=>{
               if(response){
                 AlertDialog.show({

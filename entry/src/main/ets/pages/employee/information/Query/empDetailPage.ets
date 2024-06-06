@@ -77,7 +77,7 @@ struct EmpDetailPage {
         .margin({top:5})
 
       Row(){
-        Image($r('app.media.app_icon'))
+        Image($r('app.media.person'))
           .width(100)
         Column({space:15}){
           TextInput({text:this.emp.emp_name})
@@ -103,7 +103,12 @@ struct EmpDetailPage {
 
         Row(){
           Text('电话:')
-          Text(this.emp.phone)
+          TextInput({text:this.emp.phone})
+            .width(200)
+            .onChange((value)=>{
+              this.emp.phone=value
+
+            })
         }
         .width('90%')
 
@@ -133,19 +138,31 @@ struct EmpDetailPage {
 
         Row(){
           Text('出生日期:')
-          Text(this.emp.birthday)
+          TextInput({text:this.emp.date})
+            .width(200)
+            .onChange(value=>{
+              this.emp.date=value
+            })
         }
         .width('90%')
 
         Row(){
           Text('电子邮箱:')
-          Text(this.emp.email)
+          TextInput({text:this.emp.email})
+            .width(200)
+            .onChange(value=>{
+              this.emp.email=value
+            })
         }
         .width('90%')
 
         Row(){
           Text('家庭地址:')
-          Text(this.emp.address)
+          TextInput({text:this.emp.address})
+            .width(200)
+            .onChange(value=>{
+              this.emp.address=value
+            })
         }
         .width('90%')
 
@@ -197,12 +214,6 @@ struct EmpDetailPage {
         }
         .width('90%')
       }
-
-
-
-
-
-
 
 
     }

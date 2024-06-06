@@ -5,7 +5,7 @@ import { Login } from '../httpRequest/Login'
 @Entry
 @Component
 struct LoadPage {
-  @State message: string = '人事E通'
+  @State message: string = '人事E通管理'
   @State user:User= new User('','')
   // @State loadtofirst:number =0
   @State checked:boolean=false
