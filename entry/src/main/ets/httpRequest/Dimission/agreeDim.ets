@@ -13,7 +13,10 @@ export function agreeDim(agree:Process):Promise<boolean>{
       url,
       {
         method:http.RequestMethod.POST,
-        extraData:JSON.stringify(agree)
+        extraData: {
+          'id':agree.id,
+          'date':agree.date
+        }
       }
     )
       .then(response=>{

@@ -268,13 +268,13 @@ struct DetailsPage {
                 secondaryButton:{
                   value:'Yes',
                   action:()=>{
-                    this.process.id=this.dimuser.emp_ID
+                    this.process.id=this.dimuser.dim_ID
                     agreeDim(this.process)
                       .then((response)=>{
                         if(response){
                           AlertDialog.show({
                             title:'提示',
-                            message:'删除成功',
+                            message:'离职成功',
                             primaryButton:{
                               value:'确认',
                               action:()=>{
@@ -313,7 +313,7 @@ struct DetailsPage {
                         if(response){
                           AlertDialog.show({
                             title:'提示',
-                            message:'删除成功',
+                            message:'成功拒绝',
                             primaryButton:{
                               value:'确认',
                               action:()=>{
