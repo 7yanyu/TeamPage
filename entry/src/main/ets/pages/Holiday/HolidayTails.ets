@@ -11,7 +11,7 @@ struct moveDetailsPage {
   @State message: string = '假期详情';
   @State holiday: Holiday | null = null;
   @State process: Process = new Process(0, '')
-  @State selectDate:Date=new Date
+  private selectDate:Date=new Date
   @State emp:employee=new employee(0,'','',0,0,'','','','','','','',0,0)
 
   onPageShow() {

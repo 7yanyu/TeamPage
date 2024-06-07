@@ -7,7 +7,7 @@ import { Findemp } from '../../../entity/Findemp'
 struct MonthlyReportPage {
   @State message: string = '人事月报'
   @State employee: Findemp = new Findemp(null, null, '', '', '', '', '', '', '')
-  @State selectedDate: Date = new Date()
+  private  selectedDate: Date = new Date()
   @State reportUrl: string = ''
 
   build() {

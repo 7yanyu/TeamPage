@@ -55,7 +55,9 @@ struct LoadPage {
                       url:'pages/FirstPage',
                       // params:{flag:1}//标记为该用户已登录
                     })
-                  }else{
+                    }
+                    else{
+
                     console.log('Login failed, showing AlertDialog'); // 添加日志输出
                     AlertDialog.show({
                       title:'错误',

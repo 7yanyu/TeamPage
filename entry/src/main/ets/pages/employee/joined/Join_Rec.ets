@@ -7,7 +7,7 @@ import { Findemp } from '../../../entity/Findemp'
 struct Join_Rec{
   @State message: string = '入职报表生成'
   @State employee: Findemp = new Findemp(null, null, '', '', '', '', '', '', '')
-  @State selectedDate: Date = new Date()
+  private selectedDate: Date = new Date()
   @State reportUrl: string = ''
 
   build() {

@@ -6,7 +6,7 @@ import router from '@ohos.router'
 @Component
 struct Join_Rec{
   @State message: string = '岗位报表生成'
-  @State selectedDate: Date = new Date()
+  private  selectedDate: Date = new Date()
   @State reportUrl: string = ''
   @State posId:number=0
 
