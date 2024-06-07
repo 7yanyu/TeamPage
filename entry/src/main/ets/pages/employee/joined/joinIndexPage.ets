@@ -205,15 +205,11 @@ struct JoinIndexPage {
             Image($r('app.media.test8'))
               .width(30)
               .onClick(()=>{
-                ReportByDate(this.findemp.datea,this.findemp.dateb).then(()=>{
-                  console.log('Excel 报表下载成功');
-
-                }).catch(error => {
-                  console.error('下载报表时发生错误:', error);
-
+                router.pushUrl({
+                  url:'pages/employee/joined/Join_Rec'
                 })
-
               })
+
             Text('报表生成')
               .fontSize(15)
               .textAlign(TextAlign.End)

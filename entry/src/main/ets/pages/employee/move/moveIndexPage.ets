@@ -101,7 +101,7 @@ struct MoveIndexPage {
 
         Row({space:65}){
           Text('员工ID').fontSize('18').fontWeight(FontWeight.Bold).width(70).textAlign(TextAlign.Start);
-          Text('调动类型').fontSize('18').fontWeight(FontWeight.Bold).width(80).textAlign(TextAlign.Start);
+          Text('处理状态').fontSize('18').fontWeight(FontWeight.Bold).width(80).textAlign(TextAlign.Start);
         }
         .width('90%')
         .padding({top:10,left:5})
@@ -117,9 +117,9 @@ struct MoveIndexPage {
             .width('30%')
           Column(){
             Select([
-              {value:'无'},
-              { value: '岗位间调动'},
-              { value: '部门间调动' }
+              {value:'未处理'},
+              { value: '已处理'},
+              { value: '已拒绝' }
             ])
               .selected(0)
               .font({ size: 18, weight: FontWeight.Medium })
@@ -128,15 +128,15 @@ struct MoveIndexPage {
               .optionFont({ size: 18, weight: FontWeight.Regular })
               .onSelect((index: number) => {
                 if(index==0){
-                  this.movtime.movtype=''
+                  this.movtime.process_state='未处理'
 
                 }
                 else if(index==1){
-                  this.movtime.movtype='岗位间调动'
+                  this.movtime.process_state='已处理'
 
                 }
                 else{
-                  this.movtime.movtype='部门间调动'
+                  this.movtime.process_state='已拒绝'
                 }
 
 
@@ -190,7 +190,7 @@ struct MoveIndexPage {
           Text('员工ID').fontWeight(FontWeight.Bold).width(50).textAlign(TextAlign.Start);
           Text('员工姓名').fontWeight(FontWeight.Bold).width(65).textAlign(TextAlign.Start);
           Text('调动时间').fontWeight(FontWeight.Bold).width(65).textAlign(TextAlign.Start);
-          Text('调动类型').fontWeight(FontWeight.Bold).width(65).textAlign(TextAlign.Start);
+          Text('处理状态').fontWeight(FontWeight.Bold).width(65).textAlign(TextAlign.Start);
         }
         .width('95%')
         .padding({top:8})
@@ -205,8 +205,8 @@ struct MoveIndexPage {
                   Text(empmov.emp_ID.toString()).width(30).textAlign(TextAlign.Start);
                   Text(empmov.emp_name).width(50).textAlign(TextAlign.Start);
                   Text(empmov.mov_date).width(50).textAlign(TextAlign.Start);
-                  Text(empmov.movtype).width(50).textAlign(TextAlign.Start);
-                  Text('查看')
+                  Text(empmov.process_state).width(50).textAlign(TextAlign.Start);
+                  Text('处理')
                     .fontColor('#8AB7FF')
 
                 }
@@ -259,7 +259,7 @@ struct MoveIndexPage {
               .width(30)
               .onClick(()=>{
                 router.pushUrl({
-                  url:'pages/employee/move/addMovePage'
+                  url:'pages/employee/move/Pos_Mov'
                 })
               })
             Text('岗位报表生成')
@@ -290,7 +290,7 @@ struct MoveIndexPage {
               .width(30)
               .onClick(()=>{
                 router.pushUrl({
-                  url:'pages/employee/move/addMovePage'
+                  url:'pages/employee/move/Dep_Mov'
                 })
               })
             Text('部门报表生成')

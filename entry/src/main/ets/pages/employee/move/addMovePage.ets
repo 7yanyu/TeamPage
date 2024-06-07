@@ -34,7 +34,7 @@ struct AddMovePage{
       }.padding({top:15})
       .width('90%')
       Row({space:30}){
-        Text('离职ID')
+        Text('调动单号')
           .fontSize(20)
         TextInput({placeholder:'请输入离职ID'})
           .onChange((value)=>{

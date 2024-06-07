@@ -1,7 +1,8 @@
 import router from '@ohos.router'
-import { employee } from '../../../entity/employee'
-import { Findemp } from '../../../entity/Findemp'
-import { tryRequest } from '../../../httpRequest/employee/information/tryQueryRequest'
+import { employee } from '../../../../entity/employee'
+import { Findemp } from '../../../../entity/Findemp'
+import { tryRequest } from '../../../../httpRequest/employee/information/tryQueryRequest'
+import {FindCon} from '../../../../httpRequest/employee/information/FindBy_ConProcess'
 @Entry
 @Component
 struct TryPage {
@@ -12,7 +13,10 @@ struct TryPage {
   @State hasSearched: boolean = false; // 用于跟踪是否进行了查询
   @State currentPage:number=1
   @State itemsPerPage:number=9
+  @State emp:employee=new employee(0,'','',0,0,'','','','','','','',0,0)
   private selectedDate:Date=new Date()
+ @State confirm_process:string=''
+
 
 
 
@@ -38,25 +42,23 @@ struct TryPage {
 
 
       Row(){
-        Image($r('app.media.search'))
-          .width(25)
-
         Text('工作时间:')
-          .fontSize(25)
+          .fontSize(18)
           .fontWeight(FontWeight.Bold)
-          .margin({left:5})
-      }
-      .width('90%')
-      .margin({top:10})
+          .width('100')
+          .textAlign(TextAlign.Start)
+      }.width('85%')
+      .padding({top:5})
 
       //工作时间段
       Row(){
         Button(this.employee.datea || '年/月/日        ↓')
-          .width(150)
+          .width('40%')
           .stateEffect(true)
-          .fontColor('black')
-          .backgroundColor('#F4F6F5')
+          .backgroundColor('#F5F5F5')
+          .fontColor('#459ED4')
           .onClick(()=>{
+            this.confirm_process=''
             DatePickerDialog.show({
               start:new Date('1949-01-01'),
               end:new Date('2100-12-31'),
@@ -73,11 +75,12 @@ struct TryPage {
         Text('——')
           .margin(5)
         Button(this.employee.dateb||'年/月/日        ↓')
-          .width(150)
+          .width('40%')
           .stateEffect(true)
-          .fontColor('black')
-          .backgroundColor('#F4F6F5')
+          .backgroundColor('#F5F5F5')
+          .fontColor('#459ED4')
           .onClick(()=>{
+            this.confirm_process=''
             DatePickerDialog.show({
               start:new Date('1949-01-01'),
               end:new Date('2100-12-31'),
@@ -97,52 +100,93 @@ struct TryPage {
       .margin(5)
 
       Row(){
-        Image($r('app.media.search'))
-          .width(25)
 
-        Text('员工实习状态:')
-          .fontSize(25)
-          .fontWeight(FontWeight.Bold)
-          .margin({left:5})
+        Row({space:50}){
+          Text('实习状态').fontSize('18').fontWeight(FontWeight.Bold).width(80).textAlign(TextAlign.Start);
+          Text('处理状态').fontSize('18').fontWeight(FontWeight.Bold).width(80).textAlign(TextAlign.Start);
+        }
       }
       .width('90%')
-      .margin({top:10})
+      .padding({top:10,left:5})
 
       //下拉选择栏+查询按钮
-      Row(){
-        Select([{value:'正常实习'},
-          {value:'延期'},
-          {value:'未通过'},
-          {value:'已转正'}])
-          .value('                    ')
-          .backgroundColor('#F2F2F2')
-          .onSelect((index)=>{
-            if(index==0){
-              this.employee.intern_situaiton='正常实习'
-            }else if(index==1){
-              this.employee.intern_situaiton='延期'
-            }else if(index==2){
-              this.employee.intern_situaiton='未通过'
-            }else if(index==3){
-              this.employee.intern_situaiton='已转正'
-            }
-          })
+      Row({space:38}){
+        Column(){
+          Select([{value:'正常实习'},
+            {value:'延期'},
+            {value:'未通过'},
+            {value:'已转正'}])
+            .value('         ')
+            .font({ size: 18, weight: FontWeight.Medium })
+            .fontColor('#7BB6EB')
+            .onSelect((index)=>{
+              this.confirm_process=''
+              if(index==0){
+                this.employee.intern_situaiton='正常实习'
+              }else if(index==1){
+                this.employee.intern_situaiton='延期'
+              }else if(index==2){
+                this.employee.intern_situaiton='未通过'
+              }else if(index==3){
+                this.employee.intern_situaiton='已转正'
+              }
+            })
+        }.width('30%')
+        Column(){
+          Select([{value:'未申请'},
+            {value:'已处理'},
+            {value:'待处理'},
+            {value:'已拒绝'}])
+            .value('         ')
+            .font({ size: 18, weight: FontWeight.Medium })
+            .fontColor('#7BB6EB')
+            .onSelect((index)=>{
+              if(index==0){
+                this.confirm_process='未申请'
+              }else if(index==1){
+                this.confirm_process='已处理'
+              }else if(index==2){
+                this.confirm_process='待处理'
+              }else if(index==3){
+                this.confirm_process='已拒绝'
+              }
+            })
+        }.width('30%')
 
-        Blank()
         Button('查询')
-          .width(100)
-          .stateEffect(true)
-          .type(ButtonType.Normal)
-          .borderRadius(15)           //四角的弧度
+          .fontColor('black')
+          .backgroundColor('#99D9EA')
+          .width('20%')
+          .padding(12)
+          .fontSize(13)
           .onClick(()=>{
-            tryRequest(this.employee)
-              .then((employees)=>{
-                this.employees=employees
-                this.hasSearched=true
-              })
-              .catch(error=>{
-                this.employees=[]
-              })
+            console.log(this.confirm_process)
+            if(this.confirm_process!==''){
+              console.log(this.confirm_process)
+             FindCon(this.confirm_process)
+                .then((employees)=>{
+                  console.log('123')
+                  this.employees=employees
+                  this.hasSearched=true
+                })
+                .catch(error=>{
+                  this.employees=[]
+                })
+
+
+
+            }
+            else{
+              tryRequest(this.employee)
+                .then((employees)=>{
+                  this.employees=employees
+                  this.hasSearched=true
+                })
+                .catch(error=>{
+                  this.employees=[]
+                })
+            }
+
           })
 
       }
@@ -151,32 +195,32 @@ struct TryPage {
 
       Row({space:10}){
         //id,name,datea,situation
-      //                            操作
+        //                            操作
         Text('员工ID').fontWeight(FontWeight.Bold).width(50).margin({left:10})
         Text('员工姓名').fontWeight(FontWeight.Bold).width(70)
-        Text('入职时间').fontWeight(FontWeight.Bold).width(70)
         Text('实习状态').fontWeight(FontWeight.Bold).width(70)
+        Text('处理状态').fontWeight(FontWeight.Bold).width(70)
       }
       .width('100%')
       .justifyContent(FlexAlign.Start)
       .margin(10)
       .backgroundColor('#F2F2F2')
 
-      Column({space:10}){
+      Column({space:30}){
         if(this.hasSearched){
           ForEach(this.employees.slice((this.currentPage-1)*this.itemsPerPage,this.currentPage*this.itemsPerPage),
             (item:employee)=>{
               Row({space:10}){
                 Text(item.emp_ID.toString()).width(50).textAlign(TextAlign.Center)
                 Text(item.emp_name).width(70).textAlign(TextAlign.Center)
-                Text(item.date).width(70).fontSize(15)
-                Text(item.intern_situation).width(70).textAlign(TextAlign.Center)
+                Text(item.intern_situation).width(70).fontSize(15).textAlign(TextAlign.Center).padding({left:10})
+                Text(item.confirm_process).width(70).textAlign(TextAlign.Center).padding({left:5})
                 Text('操作').fontColor('#36D').width(70).textAlign(TextAlign.Center)
                   .onClick(()=>{
                     console.log('操作按钮被点击')
                     console.log(JSON.stringify(item))
                     router.pushUrl({
-                      url:'pages/employee/information/OpTryPage',
+                      url:'pages/employee/information/Try/OpTryPage',
                       params: {
                         employee: JSON.stringify(item)
                       }
@@ -224,4 +268,3 @@ struct TryPage {
     .height('100%')
   }
 }
-

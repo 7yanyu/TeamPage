@@ -43,7 +43,32 @@ export function ADD_Process(process:Process):Promise<string>{
       }
     )
       .then(response=>{
-        if(response.result=='添加成功'){
+        if(response.result=='已处理'){
+          console.log(response.result.toString())
+          resolve(response.result.toString())
+        }else{
+          console.log('failed'+response.result.toString())
+          resolve(response.result.toString())
+        }
+      })
+  })
+}
+export function ADD_Reject(process:Process):Promise<string>{
+  return new Promise<string>((resolve,reject)=>{
+    let httpRequest=http.createHttp()
+    const url = Baseurl()+'/employeemov/reject'
+    httpRequest.request(
+      url,
+      {
+        method:http.RequestMethod.POST,
+        extraData:JSON.stringify(process),
+        header: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then(response=>{
+        if(response.result=='已处理'){
           console.log(response.result.toString())
           resolve(response.result.toString())
         }else{

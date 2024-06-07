@@ -5,6 +5,7 @@ export function ADD_dim(dimuser:DimUser):Promise<string>{
   return new Promise<string>((resolve,reject)=>{
     let httpRequest=http.createHttp()
     const url = Baseurl()+'dimission/addDim'
+    console.log(url)
 
     httpRequest.request(
       url,
@@ -14,7 +15,7 @@ export function ADD_dim(dimuser:DimUser):Promise<string>{
       }
     )
       .then(response=>{
-        if(response.result=='添加成功'){
+        if(response.result=='新增离职成功'){
           console.log(response.result.toString())
           resolve(response.result.toString())
         }else{

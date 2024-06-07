@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "storePassword": "00000019A44331DC89D8328C04EFBFEE2B777E5F43A8A38224B1DDCBC4F273E576E6A83289DA1FEBBD",
+          "certpath": "D:/zaluan/人事管理app.cer",
+          "keyAlias": "myApp_release",
+          "keyPassword": "0000001956F664EF63A3FB3D6A51FB80DE9EAB011D7B95778AD8F05EA2358482B7333F8F77A9E1BF7E",
+          "profile": "D:/zaluan/人事管理appRelease.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "D:/key/myApp_release.p12"
+        }
+      }
+    ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [

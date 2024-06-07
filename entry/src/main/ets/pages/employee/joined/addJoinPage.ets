@@ -8,7 +8,7 @@ struct  AddJoinPage{
   @State message: string = '入职管理'
   private selectedDate: Date = new Date()
   private selectedDate1: Date = new Date()
-  @State emp :employee=new employee(0,'','',0,0,'','','','','','')
+  @State emp :employee=new employee(0,'','',0,0,'','','','','','','未申请',0,0)
   @State queryType: string = '男';
   @State queryType1: string = '普通入职';
 

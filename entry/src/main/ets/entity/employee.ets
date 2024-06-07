@@ -2,6 +2,7 @@
 export class employee{
   emp_ID:number
   emp_name:string
+  password:string
   // photo:ResourceStr
   gender:string
   dep_ID:number
@@ -20,9 +21,16 @@ export class employee{
   confirm_date:string
   intern_situation:string
   intern_detail:string
+  confirm_process:string
+  annual_holiday:number
+  lieu_holiday:number
+
+
+
 
   constructor(emp_ID: number, emp_name: string, gender: string, dep_ID: number, pos_ID: number, date: string,
-  entermode:string,birthday:string,phone:string,email:string,address:string) {
+  entermode:string,birthday:string,phone:string,email:string,address:string,confirm_process:string,annual_holiday:number
+  ,lieu_holiday:number) {
     this.emp_ID=emp_ID
     this.emp_name=emp_name
     this.gender=gender
@@ -42,6 +50,10 @@ export class employee{
     this.confirm_date=''
     this.intern_situation='正常实习'
     this.intern_detail=''
+    this.confirm_process=confirm_process
+    this.annual_holiday=annual_holiday
+    this.lieu_holiday=lieu_holiday
+    this.password='123456'
 
   }
 }

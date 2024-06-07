@@ -1,18 +1,18 @@
 import router from '@ohos.router'
 import { employee } from '../../../entity/employee'
-import { tryChangeRequest } from '../../../httpRequest/employee/information/tryChangeRequest'
+import { detailRequest } from '../../../httpRequest/employee/information/detailRequest'
 @Entry
 @Component
-struct OpTryPage {
-  @State message: string = '试用期管理操作'
-  @State emp:employee=new employee()
-  @State selectDate:Date=new Date
+struct OpCareerPage {
+  @State message: string = '职业生涯操作'
+  @State emp:employee=new employee(0,'','',0,0,'','','','','','','',0,0)
+  // @State selectDate:Date=new Date
 
   onPageShow(){
     console.log('onInit called'); // 确认 onInit 被调用
     const params=router.getParams() as {employee:string}
     console.log('Params:', params); // 打印整个 params 对象
-    if(params /*&& params.item*/){
+    if(params && params.employee){
       const employeeJson=params.employee
       console.log('employeeJson:',employeeJson)
       try {
@@ -37,7 +37,7 @@ struct OpTryPage {
         Text(this.message)
           .fontSize(30)
           .fontWeight(FontWeight.Bold)
-          .margin({left:30})
+          .margin({left:45})
       }
       .width('90%')
       .margin({top:10})
@@ -63,81 +63,55 @@ struct OpTryPage {
       .margin(10)
 
       Row(){
-        Text('实习状态')
+        Text('学历背景')
           .fontSize(20)
-          .margin({right:40,left:-40})
-        Select([{value:'正常实习'},
-          {value:'延期'},
-          {value:'未通过'},
-          {value:'已转正'}])
-          .value(this.emp.intern_situation)
-          .backgroundColor('#F2F2F2')
-          .onSelect((index)=>{
-            if(index==0){
-              this.emp.intern_situation='正常实习'
-            }else if(index==1){
-              this.emp.intern_situation='延期'
-            }else if(index==2){
-              this.emp.intern_situation='未通过'
-            }else if(index==3){
-              this.emp.intern_situation='已转正'
-            }
+          .margin({right:40})
+        TextInput({text:this.emp.academic_background})
+          .onChange(value=>{
+            this.emp.academic_background=value
           })
       }
       .width('95%')
       .margin({top:20})
       .justifyContent(FlexAlign.Center)
 
-      Row(){
-        Text('转正时间')
-          .fontSize(20)
-          .margin({right:40})
-        Button(this.emp.confirm_date||'   年/月/日   ')
-          .backgroundColor('#F4F6F5')
-          .fontColor('black')
-          .onClick(()=>{
-            DatePickerDialog.show({
-              start:new Date('1949-01-01'),
-              end:new Date('2100-12-31'),
-              selected:this.selectDate,
-              onAccept:(value:DatePickerResult)=>{
-                this.selectDate.setFullYear(value.year,value.month,value.day)
-                this.emp.confirm_date=`${value.year}-${value.month}-${value.day}`
-              }
-            })
-          })
-      }
-      .width('95%')
-      .margin({top:30})
-      .justifyContent(FlexAlign.Center)
-
-      Text('实习详情')
+      Text('工作经历')
         .fontSize(20)
-        .margin({top:20,right:155})
+        .margin({right:260,top:20,bottom:10})
 
-      TextArea({ placeholder:'请输入员工实习期间的工作详情' })
+      TextArea({ text:this.emp.work_experience })
         .margin(10)
         .backgroundColor('#F4F6F5')
         .width('90%')
         .onChange((value)=>{
-          this.emp.intern_detail=value
+          this.emp.work_experience=value
         })
 
-      Button('提交')
+      Button('修改')
         .width(100)
         .margin(15)
         .onClick(()=>{
-          tryChangeRequest(this.emp).then(response=>{
+          detailRequest(this.emp).then(response=>{
             if(response){
               console.log(this.emp.toString())
-
+              AlertDialog.show({
+                title:'提示',
+                message:'操作成功，是否返回？',
+                primaryButton:{
+                  value:'No',
+                  action:()=>{}
+                },
+                secondaryButton:{
+                  value:'Yes',
+                  action:()=>{
+                    router.back()
+                  }
+                }
+              })
             }
           })
         })
-
-
-
-      }
+    }
     .width('100%')
     .height('100%')
 
