@@ -124,7 +124,7 @@ struct DetailsPage {
                     // 通过Date的setFullYear方法设置按下确定按钮时的日期，这样当弹窗再次弹出时显示选中的是上一次确定的日期
                     this.selectedDate.setFullYear(value.year, value.month, value.day)
                     console.info("DatePickerDialog:onAccept()" + `${value.year}-${value.month + 1}-${value.day}`)
-                    this.process.date = `${value.year}-${value.month + 1}-${value.day}`
+                    this.dimuser.process_date = `${value.year}-${value.month + 1}-${value.day}`
                   }
                 })
               })
@@ -307,7 +307,7 @@ struct DetailsPage {
                 secondaryButton:{
                   value:'Yes',
                   action:()=>{
-                    this.process.id=this.dimuser.emp_ID
+                    this.process.id=this.dimuser.dim_ID
                     rejectDim(this.process)
                       .then((response)=>{
                         if(response){
