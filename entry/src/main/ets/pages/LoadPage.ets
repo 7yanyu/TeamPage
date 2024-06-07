@@ -5,7 +5,7 @@ import { Login } from '../httpRequest/Login'
 @Entry
 @Component
 struct LoadPage {
-  @State message: string = '人事E通管理'
+  @State message: string = '人事E通'
   @State user:User= new User('','')
   // @State loadtofirst:number =0
   @State checked:boolean=false
@@ -55,7 +55,6 @@ struct LoadPage {
                       url:'pages/FirstPage',
                       // params:{flag:1}//标记为该用户已登录
                     })
-                  }else{
                     console.log('Login failed, showing AlertDialog'); // 添加日志输出
                     AlertDialog.show({
                       title:'错误',
@@ -84,7 +83,7 @@ struct LoadPage {
 
             // }
 
-        })
+          })
           .width(150)
           .padding(15)
       }
@@ -147,5 +146,3 @@ struct LoadPage {
     .backgroundImageSize({width:'100%',height:'100%'})
   }
 }
-
-

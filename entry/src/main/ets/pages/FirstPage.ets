@@ -16,9 +16,31 @@ struct FirstPage {
   ]
 
   private list03:Array<message>=[
-    new message($r('app.media.icon'),'1','1.1'),
-    new message($r('app.media.icon'),'2','2.1')
+    new message($r('app.media.duanwu'),'    关于2024年端午节放假安排的通知','      尊敬的全体员工，2024年端午节将至，根据国家相关规定，现将放假安排通知如下...'),
+    new message($r('app.media.tijian'),'公司年度体检安排','为了保障员工的健康，公司将于2024年7月15日至20日组织年度体检，具体安排如下...'),
   ]
+  private list04:Array<message> = [
+    {
+      img: 'https://example.com/image1.jpg',
+      msg01: '  关于2024年端午节放假安排的通知',
+      msg02: '  尊敬的全体员工，2024年端午节将至，根据国家相关规定，现将放假安排通知如下...'
+    },
+    {
+      img: 'https://example.com/image2.jpg',
+      msg01: '公司年度体检安排',
+      msg02: '为了保障员工的健康，公司将于2024年7月15日至20日组织年度体检，具体安排如下...'
+    },
+    {
+      img: 'https://example.com/image3.jpg',
+      msg01: '2024年度优秀员工评选活动',
+      msg02: '公司将于2024年8月1日启动年度优秀员工评选活动，欢迎大家踊跃参与，具体细则如下...'
+    },
+    {
+      img: 'https://example.com/image4.jpg',
+      msg01: '新员工入职培训通知',
+      msg02: '欢迎新员工加入我们的团队！入职培训将于2024年6月10日开始，详细安排如下...'
+    }
+  ];
 
   build() {
     Column() {
@@ -27,7 +49,7 @@ struct FirstPage {
         Swiper(this.swiperController){
           Image($r('app.media.swiper01'))
             .objectFit(ImageFit.Contain)
-          Image($r('app.media.swiper02'))
+          Image($r('app.media.people1'))
             .objectFit(ImageFit.Contain)
         }
         .autoPlay(true)
@@ -82,11 +104,12 @@ struct FirstPage {
       .justifyContent(FlexAlign.SpaceBetween)
       .margin(10)
 
+
       Column(){
         Text('公告信息')
           .fontWeight(FontWeight.Bold)
           .fontSize(30)
-          .margin({bottom:30})
+          .margin({bottom:15})
         Row(){
           Blank()
           Text('更多')
@@ -95,19 +118,22 @@ struct FirstPage {
             })
         }
         .width('90%')
-
-        List({space:20}){
+        .margin({bottom:10})
+        List({space:30}){
           ForEach(this.list03,
             (item:message)=>{
               ListItem(){
                 Row(){
                   Image(item.img)
                     .width(100)
+                    .width('30%')
                   Column({space:10}){
-                    Text(item.msg01)
+                    Text(item.msg01).fontWeight(FontWeight.Bold).textAlign(TextAlign.Start)
                     Text(item.msg02)
                   }
+                  .width('60%')
                   .height('15%')
+                  .padding({left:10})
                   // .backgroundColor('red')
                   .justifyContent(FlexAlign.SpaceBetween)
                 }
@@ -119,7 +145,8 @@ struct FirstPage {
         .width('100%')
         .height('100%')
         .layoutWeight(1)
-      }
+      }.padding({top:20})
+
 
 
     }

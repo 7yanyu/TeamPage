@@ -38,6 +38,8 @@ export function Login(user:User):Promise<string>{
         }
       })
       .catch(error=>{
+        console.log('username:'+user.username+'password:'+user.password)
+        console.log(error)
         resolve(error)
       })
   })

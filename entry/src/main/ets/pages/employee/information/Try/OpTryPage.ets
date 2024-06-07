@@ -6,7 +6,7 @@ import { tryChangeRequest } from '../../../../httpRequest/employee/information/t
 struct OpTryPage {
   @State message: string = '试用期管理操作'
   @State emp:employee=new employee()
-  @State selectDate:Date=new Date
+  private  selectDate:Date=new Date
 
   onPageShow(){
     console.log('onInit called'); // 确认 onInit 被调用
