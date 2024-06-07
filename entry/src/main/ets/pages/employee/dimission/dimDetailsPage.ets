@@ -112,7 +112,7 @@ struct DetailsPage {
             //   .width('70%')
             //   .padding({top:8})
 
-            Button(this.process.date|| ' 年 / 月 / 日 ')
+            Button(this.dimuser.process_date|| ' 年 / 月 / 日 ')
               .backgroundColor('#F5F5F5')
               .fontColor('#459ED4')
               .onClick(() => {
@@ -269,6 +269,7 @@ struct DetailsPage {
                   value:'Yes',
                   action:()=>{
                     this.process.id=this.dimuser.dim_ID
+                    this.process.date=this.dimuser.process_date
                     agreeDim(this.process)
                       .then((response)=>{
                         if(response){
@@ -308,6 +309,7 @@ struct DetailsPage {
                   value:'Yes',
                   action:()=>{
                     this.process.id=this.dimuser.dim_ID
+                    this.process.date=this.dimuser.process_date
                     rejectDim(this.process)
                       .then((response)=>{
                         if(response){
